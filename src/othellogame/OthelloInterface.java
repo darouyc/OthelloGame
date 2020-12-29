@@ -11,6 +11,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 
 /**
  *
@@ -24,20 +26,24 @@ public class OthelloInterface extends javax.swing.JFrame {
     public OthelloInterface() {
         initComponents();
                 
-        JLabel b1=new JLabel("1");
-        JLabel b2=new JLabel("1");
-        JLabel b3=new JLabel("1");
-        JLabel b4=new JLabel("1");
-        JLabel b5=new JLabel("1");
-        JLabel b6=new JLabel("1");
- 
-        this.panel.setLayout(new GridLayout(3,3));
-        this.panel.add(b1);
-        this.panel.add(b2);
-        this.panel.add(b3);
-        this.panel.add(b4);
-        this.panel.add(b5);
-        this.panel.add(b6);
+        GridLayout grdlyt =new GridLayout(8,8);
+        
+        this.panel.setLayout(grdlyt);
+       
+        
+        for(int i= 0;i<8;i++)
+        {
+            for(int j=0; j<8 ;j++)
+            {
+                Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+                JLabel lbl = new JLabel(" ");
+                lbl.setPreferredSize(new java.awt.Dimension(50, 50));
+                lbl.setBackground(new Color(40, 100, 28));
+                lbl.setBorder(new BevelBorder(BevelBorder.LOWERED));
+                this.panel.add(lbl, i);
+            }
+        }
+
     }
 
     /**
@@ -53,17 +59,18 @@ public class OthelloInterface extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        panel.setBackground(new java.awt.Color(255, 255, 255));
+        panel.setBackground(new java.awt.Color(40, 100, 28));
+        panel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 685, Short.MAX_VALUE)
+            .addGap(0, 463, Short.MAX_VALUE)
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 425, Short.MAX_VALUE)
+            .addGap(0, 411, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -71,16 +78,16 @@ public class OthelloInterface extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(88, 88, 88)
+                .addGap(32, 32, 32)
                 .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(238, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(18, 18, 18)
                 .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
