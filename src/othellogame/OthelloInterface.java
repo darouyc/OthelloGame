@@ -5,6 +5,7 @@
  */
 package othellogame;
 
+import game.Player;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -30,14 +31,19 @@ public class OthelloInterface extends javax.swing.JFrame {
     /**
      * Creates new form OthelloInterface
      */
+    Player p1;
+    Player p2;
+    boolean tour = true;
+    
     public OthelloInterface() {
         initComponents();
                 
         GridLayout grdlyt =new GridLayout(8,8);
         
         this.panel.setLayout(grdlyt);
+       p1 = new Player();
+       p2 = new Player();
        
-        
         for(int i= 0;i<8;i++)
         {
             for(int j=0; j<8 ;j++)
@@ -47,16 +53,56 @@ public class OthelloInterface extends javax.swing.JFrame {
                 lbl.setBackground(new Color(40, 100, 28));
                 lbl.setBorder(new BevelBorder(BevelBorder.LOWERED));
                 this.panel.add(lbl, i);
+                if(i == 3 && j == 3 || i == 4 && j == 4)
+                {
+                    p1.addJetons(lbl);
+                    lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
+                }
+                if(i == 3 && j == 4 || i == 4 && j == 3)
+                {
+                    p2.addJetons(lbl);
+                    lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
+                }
             }
         }
 
     }
     public Point getPanelPosition(Point pos)
     {
+        if(tour)
+        {
+            JLabel label = (JLabel) this.panel.getComponentAt(pos);
+            if(p1.verifyPosition(label))
+            {
+            this.panel.getComponentAt(pos).setBackground(Color.red);
+
+            label.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
+            System.out.println("done*********");
+            p1.addJetons(label);
+            tour = false;
+            return pos;
+            }else{
+                System.out.println("!!!!!déjà exploité");
+            return null;
+            }
+        }else
+        {
+             JLabel label = (JLabel) this.panel.getComponentAt(pos);
+        if(p2.verifyPosition(label))
+        {
         this.panel.getComponentAt(pos).setBackground(Color.red);
-        JLabel label = (JLabel) this.panel.getComponentAt(pos);
-        label.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
+        
+        label.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
+        System.out.println("done*********");
+        p2.addJetons(label);
+        tour = true;
         return pos;
+        }else{
+            System.out.println("!!!!!déjà exploité");
+        return null;
+        }
+        }
+        
     }
 
     /**
