@@ -29,11 +29,11 @@ public class OthelloInterface extends javax.swing.JFrame {
         JButton b3=new JButton("3");  
         JButton b4=new JButton("4");  
  
-                this.panel.setLayout(new GridLayout(2,2));
-                this.panel.add(b1);
-                this.panel.add(b2);
-                this.panel.add(b3);
-                this.panel.add(b4);
+        this.panel.setLayout(new GridLayout(2,2));
+        this.panel.add(b1);
+        this.panel.add(b2);
+        this.panel.add(b3);
+        this.panel.add(b4);
     }
 
     /**
