@@ -28,16 +28,12 @@ public class OthelloInterface extends javax.swing.JFrame {
         JLabel b2=new JLabel("1");
         JLabel b3=new JLabel("1");
         JLabel b4=new JLabel("1");
-        JLabel b5=new JLabel("1");
-        JLabel b6=new JLabel("1");
  
-        this.panel.setLayout(new GridLayout(3,3));
+        this.panel.setLayout(new GridLayout(2,2));
         this.panel.add(b1);
         this.panel.add(b2);
         this.panel.add(b3);
         this.panel.add(b4);
-        this.panel.add(b5);
-        this.panel.add(b6);
     }
 
     /**
