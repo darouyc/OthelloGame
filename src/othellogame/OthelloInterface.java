@@ -43,7 +43,8 @@ public class OthelloInterface extends javax.swing.JFrame {
         this.panel.setLayout(grdlyt);
        p1 = new Player();
        p2 = new Player();
-       
+       lblWhite.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
+       lblBlack.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
         for(int i= 0;i<8;i++)
         {
             for(int j=0; j<8 ;j++)
@@ -65,6 +66,8 @@ public class OthelloInterface extends javax.swing.JFrame {
                 }
             }
         }
+        lblScoreBlack.setText(" "+p1.getScore());
+        lblScoreWhite.setText(" "+p2.getScore());
 
     }
     public Point getPanelPosition(Point pos)
@@ -79,6 +82,7 @@ public class OthelloInterface extends javax.swing.JFrame {
             label.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
             System.out.println("done*********");
             p1.addJetons(label);
+            lblScoreWhite.setText(" "+p1.getScore());
             tour = false;
             return pos;
             }else{
@@ -90,19 +94,20 @@ public class OthelloInterface extends javax.swing.JFrame {
              JLabel label = (JLabel) this.panel.getComponentAt(pos);
         if(p2.verifyPosition(label))
         {
-        this.panel.getComponentAt(pos).setBackground(Color.red);
-        
-        label.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
-        System.out.println("done*********");
-        p2.addJetons(label);
-        tour = true;
-        return pos;
-        }else{
-            System.out.println("!!!!!déjà exploité");
-        return null;
+            this.panel.getComponentAt(pos).setBackground(Color.red);
+
+            label.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
+            System.out.println("done*********");
+            p2.addJetons(label);
+            lblScoreBlack.setText(" "+p2.getScore());
+            tour = true;
+            return pos;
+            }else{
+                System.out.println("!!!!!déjà exploité");
+            return null;
         }
         }
-        
+       
     }
 
     /**
@@ -116,6 +121,10 @@ public class OthelloInterface extends javax.swing.JFrame {
 
         panel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
+        lblScoreWhite = new javax.swing.JLabel();
+        lblBlack = new javax.swing.JLabel();
+        lblWhite = new javax.swing.JLabel();
+        lblScoreBlack = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -140,15 +149,46 @@ public class OthelloInterface extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
 
+        lblScoreWhite.setText("0");
+
+        lblBlack.setText("jLabel1");
+
+        lblWhite.setText("jLabel1");
+
+        lblScoreBlack.setText("0");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 164, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(69, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblScoreBlack, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblBlack, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblScoreWhite, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(64, 64, 64))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(69, Short.MAX_VALUE)
+                    .addComponent(lblWhite, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(64, 64, 64)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(175, 175, 175)
+                .addComponent(lblScoreWhite)
+                .addGap(61, 61, 61)
+                .addComponent(lblBlack)
+                .addGap(55, 55, 55)
+                .addComponent(lblScoreBlack)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(95, 95, 95)
+                    .addComponent(lblWhite)
+                    .addContainerGap(304, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -158,7 +198,7 @@ public class OthelloInterface extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(69, Short.MAX_VALUE))
         );
@@ -219,6 +259,10 @@ public class OthelloInterface extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblBlack;
+    private javax.swing.JLabel lblScoreBlack;
+    private javax.swing.JLabel lblScoreWhite;
+    private javax.swing.JLabel lblWhite;
     private javax.swing.JPanel panel;
     // End of variables declaration//GEN-END:variables
 }

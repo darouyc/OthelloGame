@@ -31,4 +31,8 @@ public class Player {
     {
         jetons.add(pos);
     }
+    public int getScore()
+    {
+        return jetons.size();
+    }
 }
