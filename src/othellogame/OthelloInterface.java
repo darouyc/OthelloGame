@@ -52,13 +52,13 @@ public class OthelloInterface extends javax.swing.JFrame {
                 lbl.setPreferredSize(new java.awt.Dimension(50, 50));
                 lbl.setBackground(new Color(40, 100, 28));
                 lbl.setBorder(new BevelBorder(BevelBorder.LOWERED));
-                this.panel.add(lbl, i);
-                if(i == 3 && j == 3 || i == 4 && j == 4)
+                this.panel.add(lbl, j);
+                if(i == 3 && j == 4 || i == 4 && j == 3)
                 {
                     p1.addJetons(lbl);
                     lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
                 }
-                if(i == 3 && j == 4 || i == 4 && j == 3)
+                if(i == 3 && j == 3 || i == 4 && j == 4)
                 {
                     p2.addJetons(lbl);
                     lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
