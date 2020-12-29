@@ -24,10 +24,10 @@ public class OthelloInterface extends javax.swing.JFrame {
     public OthelloInterface() {
         initComponents();
                 
-        JButton b1=new JButton("1");
-        JButton b2=new JButton("2");  
-        JButton b3=new JButton("3");  
-        JButton b4=new JButton("4");  
+        JLabel b1=new JLabel("1");
+        JLabel b2=new JLabel("1");
+        JLabel b3=new JLabel("1");
+        JLabel b4=new JLabel("1");
  
         this.panel.setLayout(new GridLayout(2,2));
         this.panel.add(b1);
