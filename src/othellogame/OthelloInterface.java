@@ -80,14 +80,17 @@ public class OthelloInterface extends javax.swing.JFrame {
     {
         if(tour)
         {
+             changePlayer();
             JLabel label = (JLabel) this.panel.getComponentAt(pos);
             if(game.verifyPosition(label))
             {
-            this.panel.getComponentAt(pos).setBackground(Color.red);
+            //this.panel.getComponentAt(pos).setBackground(Color.red);
 
             label.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
             System.out.println("done*********");
+            
             game.getPlayer1().addJetons(label);
+            trace(game.getPlayer2());
             lblScoreWhite.setText(" "+game.getPlayer1().getScore());
             tour = false;
             return pos;
@@ -97,14 +100,16 @@ public class OthelloInterface extends javax.swing.JFrame {
             }
         }else
         {
+             changePlayer();
              JLabel label = (JLabel) this.panel.getComponentAt(pos);
         if(game.verifyPosition(label))
         {
-            this.panel.getComponentAt(pos).setBackground(Color.red);
+            //this.panel.getComponentAt(pos).setBackground(Color.red);
 
             label.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
             System.out.println("done*********");
             game.getPlayer2().addJetons(label);
+             trace(game.getPlayer1());
             lblScoreBlack.setText(" "+game.getPlayer2().getScore());
             tour = true;
             return pos;
@@ -115,6 +120,41 @@ public class OthelloInterface extends javax.swing.JFrame {
         }
        
     }
+     public void trace(Player player)
+    {
+        player.getJetons();
+        for(int i=0;i<8;i++)
+        {
+            for(int j=0; j<8 ; j++)
+            {
+              
+                if(player.getJetons().contains(lbls[i][j]) && game.getJetons().contains(lbls[i][j]))
+                {
+                    
+                    lbls[i+1][j].setBackground(Color.red);
+                    lbls[i][j+1].setBackground(Color.red);
+                    lbls[i-1][j].setBackground(Color.red);
+                    lbls[i][j-1].setBackground(Color.red);
+                    lbls[i+1][j+1].setBackground(Color.red);
+                    lbls[i-1][j-1].setBackground(Color.red);
+                    lbls[i-1][j+1].setBackground(Color.red);
+                    lbls[i+1][j-1].setBackground(Color.red);
+                }
+            }
+        }
+        
+         
+    }
+     public void changePlayer()
+     {
+          for(int i=0;i<8;i++)
+        {
+            for(int j=0; j<8 ; j++)
+            {
+                lbls[i][j].setBackground(new Color(40, 100, 28));
+            }
+        }
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.

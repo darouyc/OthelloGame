@@ -28,6 +28,7 @@ import javax.swing.JLabel;
     
     public void concatArrays()
     {
+        jetons.clear();
         jetons.addAll(player1.getJetons());
         jetons.addAll(player2.getJetons());
     }
@@ -50,6 +51,11 @@ import javax.swing.JLabel;
     public void setLbels( JLabel[][] lbls)
     {
         this.lbls = lbls;
-        lbls[1][1].setBackground(Color.red);
+        //lbls[1][1].setBackground(Color.red);
     }
+    public ArrayList<JLabel> getJetons()
+    {
+        return this.jetons;
+    }
+    
 }
