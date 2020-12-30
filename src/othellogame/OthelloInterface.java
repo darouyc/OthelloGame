@@ -38,6 +38,7 @@ public class OthelloInterface extends javax.swing.JFrame {
     boolean tour = true;
     public OthelloInterface() {
         initComponents();
+        setLocationRelativeTo(null);
                 
         GridLayout grdlyt =new GridLayout(8,8);
       game = new Game();
