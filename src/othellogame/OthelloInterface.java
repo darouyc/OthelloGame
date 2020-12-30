@@ -76,7 +76,7 @@ public class OthelloInterface extends javax.swing.JFrame {
         game.concatArrays();
         game.setLbels(lbls);
     }
-    public Point getPanelPosition(Point pos)
+    public Point setPlayedPostiotion(Point pos)
     {
         if(tour)
         {
@@ -265,7 +265,7 @@ public class OthelloInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
         Point pos = new Point();
         pos.setLocation(evt.getPoint());
-        getPanelPosition(pos);
+        setPlayedPostiotion(pos);
         game.concatArrays();
     }//GEN-LAST:event_panelMouseClicked
 
