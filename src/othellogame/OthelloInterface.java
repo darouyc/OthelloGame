@@ -5,6 +5,7 @@
  */
 package othellogame;
 
+import game.Game;
 import game.Player;
 import java.awt.Color;
 import java.awt.Component;
@@ -13,6 +14,7 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -31,18 +33,15 @@ public class OthelloInterface extends javax.swing.JFrame {
     /**
      * Creates new form OthelloInterface
      */
-    Player p1;
-    Player p2;
-    boolean tour = true;
+    Game game;
     
+    boolean tour = true;
     public OthelloInterface() {
         initComponents();
                 
         GridLayout grdlyt =new GridLayout(8,8);
-        
+      game = new Game();
         this.panel.setLayout(grdlyt);
-       p1 = new Player();
-       p2 = new Player();
        lblWhite.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
        lblBlack.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
         for(int i= 0;i<8;i++)
@@ -53,36 +52,45 @@ public class OthelloInterface extends javax.swing.JFrame {
                 lbl.setPreferredSize(new java.awt.Dimension(50, 50));
                 lbl.setBackground(new Color(40, 100, 28));
                 lbl.setBorder(new BevelBorder(BevelBorder.LOWERED));
-                this.panel.add(lbl, j);
+                this.panel.add(lbl, j);        
                 if(i == 3 && j == 4 || i == 4 && j == 3)
                 {
-                    p1.addJetons(lbl);
+                    game.getPlayer1().addJetons(lbl);
                     lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
                 }
                 if(i == 3 && j == 3 || i == 4 && j == 4)
                 {
-                    p2.addJetons(lbl);
+                    game.getPlayer2().addJetons(lbl);
                     lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
                 }
             }
         }
-        lblScoreBlack.setText(" "+p1.getScore());
-        lblScoreWhite.setText(" "+p2.getScore());
-
+//        for(int i= 0;i<8;i++)
+//        {
+//            for(int j=0; j<8 ;j++)
+//            {
+//                System.out.println(this.panel);
+//            }
+//        }
+        lblScoreBlack.setText(" "+game.getPlayer1().getScore());
+        lblScoreWhite.setText(" "+game.getPlayer2().getScore());
+        game.getPlayer1().setGrille(panel);
+        game.getPlayer2().setGrille(panel);
+        game.concatArrays();
     }
     public Point getPanelPosition(Point pos)
     {
         if(tour)
         {
             JLabel label = (JLabel) this.panel.getComponentAt(pos);
-            if(p1.verifyPosition(label))
+            if(game.verifyPosition(label))
             {
             this.panel.getComponentAt(pos).setBackground(Color.red);
 
             label.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
             System.out.println("done*********");
-            p1.addJetons(label);
-            lblScoreWhite.setText(" "+p1.getScore());
+            game.getPlayer1().addJetons(label);
+            lblScoreWhite.setText(" "+game.getPlayer1().getScore());
             tour = false;
             return pos;
             }else{
@@ -92,14 +100,14 @@ public class OthelloInterface extends javax.swing.JFrame {
         }else
         {
              JLabel label = (JLabel) this.panel.getComponentAt(pos);
-        if(p2.verifyPosition(label))
+        if(game.verifyPosition(label))
         {
             this.panel.getComponentAt(pos).setBackground(Color.red);
 
             label.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
             System.out.println("done*********");
-            p2.addJetons(label);
-            lblScoreBlack.setText(" "+p2.getScore());
+            game.getPlayer2().addJetons(label);
+            lblScoreBlack.setText(" "+game.getPlayer2().getScore());
             tour = true;
             return pos;
             }else{
@@ -220,6 +228,7 @@ public class OthelloInterface extends javax.swing.JFrame {
         Point pos = new Point();
         pos.setLocation(evt.getPoint());
         getPanelPosition(pos);
+        game.concatArrays();
     }//GEN-LAST:event_panelMouseClicked
 
     /**

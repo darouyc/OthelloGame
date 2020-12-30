@@ -8,6 +8,7 @@ package game;
 import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -15,18 +16,16 @@ import javax.swing.JLabel;
  */
 public class Player {
     ArrayList<JLabel> jetons;
-    
+    JPanel grille;
     public Player()
     {
         jetons= new ArrayList();
     }
-    
-    public boolean verifyPosition(JLabel lbl)
+    public void setGrille(JPanel pn)
     {
-        if(jetons.contains(lbl))
-            return false;
-        return true;
+        this.grille = pn;
     }
+ 
     public void addJetons(JLabel pos)
     {
         jetons.add(pos);
@@ -34,5 +33,21 @@ public class Player {
     public int getScore()
     {
         return jetons.size();
+    }
+    
+    public ArrayList<JLabel> getPossibilities(ArrayList<JLabel> vs)
+    {
+        ArrayList<JLabel> results = null;
+            for(JLabel lbl :vs)
+            {
+                
+              System.out.println(this.grille.getComponent(lbl.getComponentCount()));
+            }
+        return results;
+    }
+    
+    public ArrayList<JLabel> getJetons()
+    {
+        return this.jetons;
     }
 }
