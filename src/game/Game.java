@@ -5,6 +5,7 @@
  */
 package game;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 
@@ -16,6 +17,7 @@ import javax.swing.JLabel;
         ArrayList<JLabel> jetons;
         Player player1;
         Player player2;
+        JLabel[][] lbls = new JLabel[8][8];
     
     public Game()
     {
@@ -44,5 +46,10 @@ import javax.swing.JLabel;
     public Player getPlayer2()
     {
         return player2;
+    }
+    public void setLbels( JLabel[][] lbls)
+    {
+        this.lbls = lbls;
+        lbls[1][1].setBackground(Color.red);
     }
 }

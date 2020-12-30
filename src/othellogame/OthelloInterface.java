@@ -35,7 +35,8 @@ public class OthelloInterface extends javax.swing.JFrame {
      */
     Game game;
     
-    boolean tour = true;
+    boolean tour = false;
+    JLabel[][] lbls = new JLabel[8][8];
     public OthelloInterface() {
         initComponents();
         setLocationRelativeTo(null);
@@ -53,7 +54,8 @@ public class OthelloInterface extends javax.swing.JFrame {
                 lbl.setPreferredSize(new java.awt.Dimension(50, 50));
                 lbl.setBackground(new Color(40, 100, 28));
                 lbl.setBorder(new BevelBorder(BevelBorder.LOWERED));
-                this.panel.add(lbl, j);        
+                this.panel.add(lbl, j);  
+                lbls[i][j]=lbl;
                 if(i == 3 && j == 4 || i == 4 && j == 3)
                 {
                     game.getPlayer1().addJetons(lbl);
@@ -66,18 +68,13 @@ public class OthelloInterface extends javax.swing.JFrame {
                 }
             }
         }
-//        for(int i= 0;i<8;i++)
-//        {
-//            for(int j=0; j<8 ;j++)
-//            {
-//                System.out.println(this.panel);
-//            }
-//        }
+
         lblScoreBlack.setText(" "+game.getPlayer1().getScore());
         lblScoreWhite.setText(" "+game.getPlayer2().getScore());
         game.getPlayer1().setGrille(panel);
         game.getPlayer2().setGrille(panel);
         game.concatArrays();
+        game.setLbels(lbls);
     }
     public Point getPanelPosition(Point pos)
     {
