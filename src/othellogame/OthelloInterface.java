@@ -6,6 +6,7 @@
 package othellogame;
 
 import game.Game;
+import game.MyLabel;
 import game.Player;
 import java.awt.Color;
 import java.awt.Component;
@@ -34,93 +35,98 @@ public class OthelloInterface extends javax.swing.JFrame {
      * Creates new form OthelloInterface
      */
     Game game;
-    
+
     boolean tour = false;
-    JLabel[][] lbls = new JLabel[8][8];
+    MyLabel[][] lbls = new MyLabel[8][8];
+
     public OthelloInterface() {
         initComponents();
         setLocationRelativeTo(null);
-                
-        GridLayout grdlyt =new GridLayout(8,8);
-      game = new Game();
+
+        GridLayout grdlyt = new GridLayout(8, 8);
+        game = new Game(lbls);
         this.panel.setLayout(grdlyt);
-       lblWhite.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
-       lblBlack.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
-        for(int i= 0;i<8;i++)
-        {
-            for(int j=0; j<8 ;j++)
-            {
-                JLabel lbl = new JLabel(" ");
+
+        //Score icon
+        lblWhite.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
+        lblBlack.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
+
+        // create labels
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                MyLabel lbl = new MyLabel(" ");
                 lbl.setPreferredSize(new java.awt.Dimension(50, 50));
                 lbl.setBackground(new Color(40, 100, 28));
                 lbl.setBorder(new BevelBorder(BevelBorder.LOWERED));
-                this.panel.add(lbl, j);  
-                lbls[i][j]=lbl;
-                if(i == 3 && j == 4 || i == 4 && j == 3)
-                {
+                this.panel.add(lbl);
+
+                lbls[i][j] = lbl;
+                // initial stat  
+                if (i == 3 && j == 4 || i == 4 && j == 3) {
                     game.getPlayer1().addJetons(lbl);
                     lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
+                    lbl.setContent(1);
                 }
-                if(i == 3 && j == 3 || i == 4 && j == 4)
-                {
+                if (i == 3 && j == 3 || i == 4 && j == 4) {
                     game.getPlayer2().addJetons(lbl);
                     lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
+                    lbl.setContent(2);
                 }
             }
         }
 
-        lblScoreBlack.setText(" "+game.getPlayer1().getScore());
-        lblScoreWhite.setText(" "+game.getPlayer2().getScore());
-        game.getPlayer1().setGrille(panel);
-        game.getPlayer2().setGrille(panel);
-        game.concatArrays();
+        // show score for players
+        lblScoreBlack.setText(" " + game.getPlayer1().getScore());
+        lblScoreWhite.setText(" " + game.getPlayer2().getScore());
+
+        //Update matrix
         game.setLbels(lbls);
     }
-    public Point getPanelPosition(Point pos)
-    {
-        if(tour)
+
+    public void play(Point pos) {
+        changePlayer();
+        MyLabel label = (MyLabel) this.panel.getComponentAt(pos);
+        
+        //verify label if empty
+        if (game.verifyPosition(label)) 
         {
-             changePlayer();
-            JLabel label = (JLabel) this.panel.getComponentAt(pos);
-            if(game.verifyPosition(label))
+            // player 1
+            if (tour) 
             {
-            //this.panel.getComponentAt(pos).setBackground(Color.red);
+                //add white icon
+                label.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
+                label.setContent(1);
 
-            label.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
-            System.out.println("done*********");
+                System.out.println("done*********");
+                
+                game.getPlayer1().addJetons(label);
+                trace(game.getPlayer2());
+                lblScoreWhite.setText(" " + game.getPlayer1().getScore());
+
+                tour = false;
             
-            game.getPlayer1().addJetons(label);
-            trace(game.getPlayer2());
-            lblScoreWhite.setText(" "+game.getPlayer1().getScore());
-            tour = false;
-            return pos;
-            }else{
-                System.out.println("!!!!!déjà exploité");
-            return null;
-            }
-        }else
-        {
-             changePlayer();
-             JLabel label = (JLabel) this.panel.getComponentAt(pos);
-        if(game.verifyPosition(label))
-        {
-            //this.panel.getComponentAt(pos).setBackground(Color.red);
-
+            }  
+               //player 2 
+            else {
+             
+                //add black icon
             label.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
+            label.setContent(2);
+
             System.out.println("done*********");
             game.getPlayer2().addJetons(label);
-             trace(game.getPlayer1());
-            lblScoreBlack.setText(" "+game.getPlayer2().getScore());
+            trace(game.getPlayer1());
+            lblScoreBlack.setText(" " + game.getPlayer2().getScore());
             tour = true;
-            return pos;
-            }else{
+            }
+        } else{
                 System.out.println("!!!!!déjà exploité");
-            return null;
-        }
-        }
-       
-    }
-     public void trace(Player player)
+
+               }
+    
+
+}
+public void trace(Player player)
     {
         player.getJetons();
         for(int i=0;i<8;i++)
@@ -265,8 +271,17 @@ public class OthelloInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
         Point pos = new Point();
         pos.setLocation(evt.getPoint());
-        getPanelPosition(pos);
-        game.concatArrays();
+        play(pos);
+       
+        //show matrix in console
+         for(int i=0 ; i<8 ; i++)
+         {
+             System.out.println(" ");
+             for(int j = 0 ; j<8 ; j++)
+             {
+                 System.out.print(" "+lbls[i][j].getContent()+" ");
+             }
+         }
     }//GEN-LAST:event_panelMouseClicked
 
     /**
@@ -283,16 +298,28 @@ public class OthelloInterface extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                }
+                
+
+}
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OthelloInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OthelloInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OthelloInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OthelloInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OthelloInterface.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
+
+} catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(OthelloInterface.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
+
+} catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(OthelloInterface.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
+
+} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(OthelloInterface.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

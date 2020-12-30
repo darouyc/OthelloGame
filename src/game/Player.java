@@ -16,15 +16,12 @@ import javax.swing.JPanel;
  */
 public class Player {
     ArrayList<JLabel> jetons;
-    JPanel grille;
+  
     public Player()
     {
         jetons= new ArrayList();
     }
-    public void setGrille(JPanel pn)
-    {
-        this.grille = pn;
-    }
+  
  
     public void addJetons(JLabel pos)
     {
@@ -33,17 +30,6 @@ public class Player {
     public int getScore()
     {
         return jetons.size();
-    }
-    
-    public ArrayList<JLabel> getPossibilities(ArrayList<JLabel> vs)
-    {
-        ArrayList<JLabel> results = null;
-            for(JLabel lbl :vs)
-            {
-                
-              System.out.println(this.grille.getComponent(lbl.getComponentCount()));
-            }
-        return results;
     }
     
     public ArrayList<JLabel> getJetons()

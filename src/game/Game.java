@@ -17,21 +17,22 @@ import javax.swing.JLabel;
         ArrayList<JLabel> jetons;
         Player player1;
         Player player2;
-        JLabel[][] lbls = new JLabel[8][8];
+        MyLabel [][] lbls;
     
-    public Game()
+    public Game( MyLabel [][] lbls )
     {
+       this.lbls = lbls;
        jetons = new ArrayList();
        this.player1 = new Player();
        this.player2 = new Player();
     }
     
-    public void concatArrays()
-    {
-        jetons.clear();
-        jetons.addAll(player1.getJetons());
-        jetons.addAll(player2.getJetons());
-    }
+//    public void concatArrays()
+//    {
+//        jetons.clear();
+//        jetons.addAll(player1.getJetons());
+//        jetons.addAll(player2.getJetons());
+//    }
     
     public boolean verifyPosition(JLabel lbl)
     {
@@ -48,7 +49,7 @@ import javax.swing.JLabel;
     {
         return player2;
     }
-    public void setLbels( JLabel[][] lbls)
+    public void setLbels( MyLabel[][] lbls)
     {
         this.lbls = lbls;
         //lbls[1][1].setBackground(Color.red);
