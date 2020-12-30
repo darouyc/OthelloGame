@@ -37,6 +37,7 @@ public class OthelloInterface extends javax.swing.JFrame {
     
     public OthelloInterface() {
         initComponents();
+        setLocationRelativeTo(null);
                 
         GridLayout grdlyt =new GridLayout(8,8);
         
