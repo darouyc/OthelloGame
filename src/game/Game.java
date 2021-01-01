@@ -40,6 +40,19 @@ import javax.swing.JLabel;
             return false;
         return true;
     }
+    public boolean verify1(JLabel lbl)
+    {
+        if(player1.getJetons().contains(lbl))
+            return false;
+        return true;
+    }
+    public boolean verify2(JLabel lbl)
+    {
+        if(player2.getJetons().contains(lbl))
+            return false;
+        return true;
+    }
+    
     public Player getPlayer1()
     {
         return player1;
