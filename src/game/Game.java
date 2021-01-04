@@ -27,12 +27,12 @@ import javax.swing.JLabel;
        this.player2 = new Player();
     }
     
-//    public void concatArrays()
-//    {
-//        jetons.clear();
-//        jetons.addAll(player1.getJetons());
-//        jetons.addAll(player2.getJetons());
-//    }
+    public void concatArrays()
+    {
+        jetons.clear();
+        jetons.addAll(player1.getJetons());
+        jetons.addAll(player2.getJetons());
+    }
     
     public boolean verifyPosition(JLabel lbl)
     {
