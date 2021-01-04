@@ -84,6 +84,8 @@ public class OthelloInterface extends javax.swing.JFrame {
     }
 
     public void play(Point pos) {
+        // Concat players arrays
+        game.concatArrays();
         changePlayer();
         MyLabel label = (MyLabel) this.panel.getComponentAt(pos);
         
