@@ -95,14 +95,14 @@ public class OthelloInterface extends javax.swing.JFrame {
             {
                 //add white icon
                 label.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
-                label.setContent(1);
+                changeStat( label, 1);
 
                 System.out.println("done*********");
                 
                 game.getPlayer1().addJetons(label);
-                trace(game.getPlayer2());
+                trace(1);
                 lblScoreWhite.setText(" " + game.getPlayer1().getScore());
-
+                
                 tour = false;
             
             }  
@@ -110,14 +110,14 @@ public class OthelloInterface extends javax.swing.JFrame {
             else {
              
                 //add black icon
-            label.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
-            label.setContent(2);
+                label.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
+                changeStat( label, 2);
 
-            System.out.println("done*********");
-            game.getPlayer2().addJetons(label);
-            trace(game.getPlayer1());
-            lblScoreBlack.setText(" " + game.getPlayer2().getScore());
-            tour = true;
+                System.out.println("done*********");
+                game.getPlayer2().addJetons(label);
+                trace(2);
+                lblScoreBlack.setText(" " + game.getPlayer2().getScore());
+                tour = true;
             }
         } else{
                 System.out.println("!!!!!déjà exploité");
@@ -126,30 +126,54 @@ public class OthelloInterface extends javax.swing.JFrame {
     
 
 }
-public void trace(Player player)
+public void trace(int playerContent)
     {
-        player.getJetons();
         for(int i=0;i<8;i++)
         {
             for(int j=0; j<8 ; j++)
             {
-              
-                if(player.getJetons().contains(lbls[i][j]) && game.getJetons().contains(lbls[i][j]))
+                if(lbls[i][j].getContent() == playerContent )
                 {
-                    
-                    lbls[i+1][j].setBackground(Color.red);
-                    lbls[i][j+1].setBackground(Color.red);
-                    lbls[i-1][j].setBackground(Color.red);
-                    lbls[i][j-1].setBackground(Color.red);
-                    lbls[i+1][j+1].setBackground(Color.red);
-                    lbls[i-1][j-1].setBackground(Color.red);
-                    lbls[i-1][j+1].setBackground(Color.red);
-                    lbls[i+1][j-1].setBackground(Color.red);
+                    if(verifyLine(i, lbls[i][j]) && verifyColumn(j, lbls[i][j]))
+                    {
+                        lbls[i+1][j].setBackground(Color.red);
+                        lbls[i][j+1].setBackground(Color.red);
+                        lbls[i-1][j].setBackground(Color.red);
+                        lbls[i][j-1].setBackground(Color.red);
+                        lbls[i+1][j+1].setBackground(Color.red);
+                        lbls[i-1][j-1].setBackground(Color.red);
+                        lbls[i-1][j+1].setBackground(Color.red);
+                        lbls[i+1][j-1].setBackground(Color.red);
+                    }
                 }
             }
         }
         
          
+    }
+    //line
+    public boolean verifyLine(int line, MyLabel lbl)
+    {
+        for(int column = 0; column<8 ; column++)
+        {
+            if(lbls[line][column].getContent() != 0 && lbls[line][column]!=lbl)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    //column 
+        public boolean verifyColumn(int column, MyLabel lbl)
+    {
+        for(int line = 0; line<8 ; line++)
+        {
+            if(lbls[line][column].getContent() != 0 && lbls[line][column]!=lbl)
+            {
+                return true;
+            }
+        }
+        return false;
     }
      public void changePlayer()
      {
@@ -160,6 +184,21 @@ public void trace(Player player)
                 lbls[i][j].setBackground(new Color(40, 100, 28));
             }
         }
+     }
+     
+     public void changeStat(MyLabel pos, int content)
+     {
+             for(int i=0;i<8;i++)
+        {
+            for(int j=0; j<8 ; j++)
+            {
+                if(lbls[i][j]==pos)
+                {
+                 lbls[i][j].setContent(content);
+                }
+            }
+        }
+     
      }
 
     /**
