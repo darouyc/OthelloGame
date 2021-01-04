@@ -36,7 +36,7 @@ public class OthelloInterface extends javax.swing.JFrame {
      */
     Game game;
 
-    boolean tour ;
+    boolean tour = false;
     MyLabel[][] lbls = new MyLabel[8][8];
 
     public OthelloInterface() {
@@ -88,49 +88,41 @@ public class OthelloInterface extends javax.swing.JFrame {
         MyLabel label = (MyLabel) this.panel.getComponentAt(pos);
         
         //verify label if empty
-        if (tour) {
+        if (game.verifyPosition(label)) 
+        {
             // player 1
-            if (game.verify1(label) && game.verify2(label)) {
+            if (tour) 
+            {
                 //add white icon
                 label.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
-                changeStat(label, 1);
+                changeStat( label, 1);
 
                 System.out.println("done*********");
-
+                
                 game.getPlayer1().addJetons(label);
                 trace(1);
                 lblScoreWhite.setText(" " + game.getPlayer1().getScore());
-
+                
                 tour = false;
-
-            } else {
-                System.out.println("!!!!!déjà exploité");
-
-            }
-        }
-            else{
-            //player 2
-            if (game.verify1(label) && game.verify2(label)) {
+            
+            }  
+               //player 2 
+            else {
+             
                 //add black icon
                 label.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
-                changeStat(label, 2);
+                changeStat( label, 2);
 
                 System.out.println("done*********");
                 game.getPlayer2().addJetons(label);
                 trace(2);
                 lblScoreBlack.setText(" " + game.getPlayer2().getScore());
                 tour = true;
-            } else {
+            }
+        } else{
                 System.out.println("!!!!!déjà exploité");
 
-            }
-                    
-                    }
-             
-
-            
-
-        
+               }
     
 
 }
