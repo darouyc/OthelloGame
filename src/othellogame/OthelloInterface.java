@@ -62,19 +62,21 @@ public class OthelloInterface extends javax.swing.JFrame {
                 lbl.setPreferredSize(new java.awt.Dimension(50, 50));
                 lbl.setBackground(new Color(40, 100, 28));
                 lbl.setBorder(new BevelBorder(BevelBorder.LOWERED));
+                lbl.setText("i" + i + "j" + j );
                 this.panel.add(lbl);
 
                 lbls[i][j] = lbl;
                 // initial stat  
                 if (i == 3 && j == 4 || i == 4 && j == 3) {
                     game.getPlayer1().addJetons(lbl);
-                    lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
-                    lbl.setContent(1);
+                    lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
+                    lbl.setContent(2);
+                    
                 }
                 if (i == 3 && j == 3 || i == 4 && j == 4) {
                     game.getPlayer2().addJetons(lbl);
-                    lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
-                    lbl.setContent(2);
+                    lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
+                    lbl.setContent(1);
                 }
                 
                 
@@ -171,52 +173,46 @@ public class OthelloInterface extends javax.swing.JFrame {
     
 private void trace(int playerContent)
     {
-        for(int i=0;i<8;i++)
-        {
-            for(int j=0; j<8 ; j++)
+        try {
+            for(int i=0;i<8;i++)
             {
-                //get used postion with content 
-                if(lbls[i][j].getContent() == playerContent )
+                for(int j=0; j<8 ; j++)
                 {
-                    if(verifyLine(i, lbls[i][j]) && verifyColumn(j, lbls[i][j]))
-                    {   
-                        if(game.verifyPosition(lbls[i+1][j])){
-                            lbls[i+1][j].setBackground(Color.red);
-                            
+                    //get used postion with content 
+                    if(lbls[i][j].getContent() == playerContent )
+                    {
+                        if(verifyLine(i, lbls[i][j]) && verifyColumn(j, lbls[i][j]) && verifyDiagonal(lbls[i][j]) )
+                        {   
+                            //Column
+                            if(game.verifyPosition(lbls[i+1][j]))
+                                lbls[i+1][j].setBackground(Color.red);
+                            if(game.verifyPosition(lbls[i-1][j]))
+                                lbls[i-1][j].setBackground(Color.red);
+    //                        
+                            //Ligne
+                            if(game.verifyPosition(lbls[i][j+1]))
+                                lbls[i][j+1].setBackground(Color.red);
+                            if(game.verifyPosition(lbls[i][j-1]))
+                                lbls[i][j-1].setBackground(Color.red);
+
+                            //Diagonal
+                            if(game.verifyPosition(lbls[i+1][j+1]) && lbls[i-1][j-1].getContent()!= playerContent && lbls[i-1][j-1].getContent() != 0  )
+                                lbls[i+1][j+1].setBackground(Color.red);
+                            if(game.verifyPosition(lbls[i-1][j-1]) && lbls[i+1][j+1].getContent() != playerContent && lbls[i+1][j+1].getContent() != 0 )
+                                lbls[i-1][j-1].setBackground(Color.red);
+                            if(game.verifyPosition(lbls[i-1][j+1]) && lbls[i+1][j-1].getContent()!= playerContent && lbls[i+1][j-1].getContent() != 0 )
+                                lbls[i-1][j+1].setBackground(Color.red);
+                            if(game.verifyPosition(lbls[i+1][j-1]) && lbls[i-1][j+1].getContent()!= playerContent && lbls[i-1][j+1].getContent() != 0 )
+                                lbls[i+1][j-1].setBackground(Color.red);
+
                         }
-                        if(game.verifyPosition(lbls[i][j+1])){
-                            lbls[i][j+1].setBackground(Color.red);
-                            
-                        }
-                        if(game.verifyPosition(lbls[i-1][j])){
-                            lbls[i-1][j].setBackground(Color.red);
-                            
-                        }
-                        if(game.verifyPosition(lbls[i][j-1])){
-                            lbls[i][j-1].setBackground(Color.red);
-                            
-                        }
-                        if(game.verifyPosition(lbls[i+1][j+1])){
-                            lbls[i+1][j+1].setBackground(Color.red);
-                            
-                        }
-                        if(game.verifyPosition(lbls[i-1][j-1])){
-                            lbls[i-1][j-1].setBackground(Color.red);
-                            
-                        }
-                        if(game.verifyPosition(lbls[i-1][j+1])){
-                            lbls[i-1][j+1].setBackground(Color.red);
-                            
-                        }
-                        if(game.verifyPosition(lbls[i+1][j-1])){
-                            lbls[i+1][j-1].setBackground(Color.red);
-                            
-                        }
- 
                     }
                 }
             }
+        } catch (Exception e) {
+            
         }
+        
         
          
     }
@@ -236,12 +232,40 @@ private void trace(int playerContent)
         public boolean verifyColumn(int column, MyLabel lbl)
     {
         for(int line = 0; line<8 ; line++)
-        {
             if(lbls[line][column].getContent() != 0 && lbls[line][column]!=lbl)
-            {
-                return true;
+                return true;        
+        return false;
+    }
+            //diagonale
+        public boolean verifyDiagonal(MyLabel lbl)
+    {
+        //Calcul distance entre diag et position de label
+        int dist = 0;
+        
+        //To localize the diagonal.column for each row
+        int diagonal = 0;
+        
+        for(int line = 0; line<8 ; line++)
+            for(int column = 0; column<8 ; column++){
+                if(line == column) diagonal = column;
+                if(lbls[line][column] == lbl && column>line)
+                    dist = column - diagonal;
+                if(lbls[line][column] == lbl && column<line)
+                    dist = diagonal - column;
+            }   
+        
+        
+        for(int line = 0; line<8 ; line++)
+            for(int column = 0; column<8 ; column++){
+                if(line == column && column>line && (column+dist < 8) )
+                    if(lbls[line][column+dist].getContent() != 0 && lbls[line][column+dist]!=lbl)
+                        return true;
+                if(line == column && column <= line && (column-dist >= 0))
+                    if(lbls[line][column - dist].getContent() != 0 && lbls[line][column - dist]!=lbl)
+                        return true;  
             }
-        }
+        
+
         return false;
     }
      public void changePlayer()
