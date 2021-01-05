@@ -42,7 +42,8 @@ public class OthelloInterface extends javax.swing.JFrame {
     public OthelloInterface() {
         initComponents();
         setLocationRelativeTo(null);
-
+        setDefaultCloseOperation(OthelloInterface.EXIT_ON_CLOSE);
+        
         GridLayout grdlyt = new GridLayout(8, 8);
         game = new Game(lbls);
         this.panel.setLayout(grdlyt);
@@ -72,6 +73,8 @@ public class OthelloInterface extends javax.swing.JFrame {
                     lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
                     lbl.setContent(2);
                 }
+                
+                
             }
         }
 
@@ -98,37 +101,40 @@ public class OthelloInterface extends javax.swing.JFrame {
                 //add white icon
                 label.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
                 changeStat( label, 1);
-
-                System.out.println("done*********");
-                
+                System.out.println("done*********");              
                 game.getPlayer1().addJetons(label);
                 trace(1);
                 lblScoreWhite.setText(" " + game.getPlayer1().getScore());
-                
                 tour = false;
-            
+                label.setBackground(new Color(40, 100, 28));
             }  
                //player 2 
             else {
-             
                 //add black icon
                 label.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
+                label.setBackground(Color.green);
                 changeStat( label, 2);
-
                 System.out.println("done*********");
                 game.getPlayer2().addJetons(label);
                 trace(2);
                 lblScoreBlack.setText(" " + game.getPlayer2().getScore());
                 tour = true;
+                label.setBackground(new Color(40, 100, 28));
             }
         } else{
                 System.out.println("!!!!!déjà exploité");
-
+                if (tour) {
+                    trace(2);
+                }
+                else {
+                    trace(1);
+                }
                }
     
 
 }
-public void trace(int playerContent)
+    
+private void trace(int playerContent)
     {
         for(int i=0;i<8;i++)
         {
@@ -137,15 +143,40 @@ public void trace(int playerContent)
                 if(lbls[i][j].getContent() == playerContent )
                 {
                     if(verifyLine(i, lbls[i][j]) && verifyColumn(j, lbls[i][j]))
-                    {
-                        lbls[i+1][j].setBackground(Color.red);
-                        lbls[i][j+1].setBackground(Color.red);
-                        lbls[i-1][j].setBackground(Color.red);
-                        lbls[i][j-1].setBackground(Color.red);
-                        lbls[i+1][j+1].setBackground(Color.red);
-                        lbls[i-1][j-1].setBackground(Color.red);
-                        lbls[i-1][j+1].setBackground(Color.red);
-                        lbls[i+1][j-1].setBackground(Color.red);
+                    {   
+                        if(game.verifyPosition(lbls[i+1][j])){
+                            lbls[i+1][j].setBackground(Color.red);
+                            
+                        }
+                        if(game.verifyPosition(lbls[i][j+1])){
+                            lbls[i][j+1].setBackground(Color.red);
+                            
+                        }
+                        if(game.verifyPosition(lbls[i-1][j])){
+                            lbls[i-1][j].setBackground(Color.red);
+                            
+                        }
+                        if(game.verifyPosition(lbls[i][j-1])){
+                            lbls[i][j-1].setBackground(Color.red);
+                            
+                        }
+                        if(game.verifyPosition(lbls[i+1][j+1])){
+                            lbls[i+1][j+1].setBackground(Color.red);
+                            
+                        }
+                        if(game.verifyPosition(lbls[i-1][j-1])){
+                            lbls[i-1][j-1].setBackground(Color.red);
+                            
+                        }
+                        if(game.verifyPosition(lbls[i-1][j+1])){
+                            lbls[i-1][j+1].setBackground(Color.red);
+                            
+                        }
+                        if(game.verifyPosition(lbls[i+1][j-1])){
+                            lbls[i+1][j-1].setBackground(Color.red);
+                            
+                        }
+ 
                     }
                 }
             }
@@ -196,7 +227,9 @@ public void trace(int playerContent)
             {
                 if(lbls[i][j]==pos)
                 {
-                 lbls[i][j].setContent(content);
+                    lbls[i][j].setContent(content);
+                    lbls[i][j].setBackground(new Color(40, 100, 28));
+                    game.setLbels(lbls);
                 }
             }
         }
