@@ -87,8 +87,16 @@ public class OthelloInterface extends javax.swing.JFrame {
 
         //Update matrix
         game.setLbels(lbls);
+        first();
     }
-
+    public void first()
+    {
+        trace(1);
+        lbls[3][4].setBackground(new Color(40, 100, 28));
+        lbls[4][3].setBackground(new Color(40, 100, 28));
+        lbls[3][3].setBackground(new Color(40, 100, 28));
+        lbls[4][4].setBackground(new Color(40, 100, 28));
+    }
     public void play(Point pos) {
         // Concat players arrays
         game.concatArrays();
@@ -127,7 +135,6 @@ public class OthelloInterface extends javax.swing.JFrame {
             else {
                 //add black icon
                 label.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
-                label.setBackground(Color.green);
                 
                 //add label to matrix with content 2 == black
                 changeStat( label, 2);
@@ -149,6 +156,8 @@ public class OthelloInterface extends javax.swing.JFrame {
         } else{
                 // used position
                 System.out.println("------Not available-------");
+                
+                // display possibilities
                 if (tour) {
                     trace(2);
                 }
