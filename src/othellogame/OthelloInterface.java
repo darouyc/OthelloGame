@@ -44,7 +44,10 @@ public class OthelloInterface extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(OthelloInterface.EXIT_ON_CLOSE);
         
+        //create grille 
         GridLayout grdlyt = new GridLayout(8, 8);
+        
+        //initialization game
         game = new Game(lbls);
         this.panel.setLayout(grdlyt);
 
@@ -90,9 +93,11 @@ public class OthelloInterface extends javax.swing.JFrame {
         // Concat players arrays
         game.concatArrays();
         changePlayer();
+        
+        //get selected label
         MyLabel label = (MyLabel) this.panel.getComponentAt(pos);
         
-        //verify label if empty
+        //verify label if is empty
         if (game.verifyPosition(label)) 
         {
             // player 1
@@ -100,11 +105,21 @@ public class OthelloInterface extends javax.swing.JFrame {
             {
                 //add white icon
                 label.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
+                
+                //add label to matrix with content 1 == white 
                 changeStat( label, 1);
-                System.out.println("done*********");              
+                System.out.println("-----------done----------"); 
+               
+                //add Jeton to player array 
                 game.getPlayer1().addJetons(label);
+                
+                //display possibilities to next player
                 trace(1);
+                
+                //Update score
                 lblScoreWhite.setText(" " + game.getPlayer1().getScore());
+                
+                //change player
                 tour = false;
                 label.setBackground(new Color(40, 100, 28));
             }  
@@ -113,16 +128,27 @@ public class OthelloInterface extends javax.swing.JFrame {
                 //add black icon
                 label.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
                 label.setBackground(Color.green);
+                
+                //add label to matrix with content 2 == black
                 changeStat( label, 2);
-                System.out.println("done*********");
+                System.out.println("-----------done----------");
+                
+                //add Jeton to player array
                 game.getPlayer2().addJetons(label);
+                
+                //display possibilities to next player
                 trace(2);
+                
+                //Update score
                 lblScoreBlack.setText(" " + game.getPlayer2().getScore());
+                
+                 //change player
                 tour = true;
                 label.setBackground(new Color(40, 100, 28));
             }
         } else{
-                System.out.println("!!!!!déjà exploité");
+                // used position
+                System.out.println("------Not available-------");
                 if (tour) {
                     trace(2);
                 }
@@ -140,6 +166,7 @@ private void trace(int playerContent)
         {
             for(int j=0; j<8 ; j++)
             {
+                //get used postion with content 
                 if(lbls[i][j].getContent() == playerContent )
                 {
                     if(verifyLine(i, lbls[i][j]) && verifyColumn(j, lbls[i][j]))
@@ -220,11 +247,12 @@ private void trace(int playerContent)
      }
      
      public void changeStat(MyLabel pos, int content)
-     {
-             for(int i=0;i<8;i++)
+    {
+       for(int i=0;i<8;i++)
         {
             for(int j=0; j<8 ; j++)
             {
+                //get Label from matrix and change state from 0 == empty to 1 == white or 2 == black
                 if(lbls[i][j]==pos)
                 {
                     lbls[i][j].setContent(content);
