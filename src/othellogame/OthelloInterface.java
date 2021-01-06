@@ -62,7 +62,8 @@ public class OthelloInterface extends javax.swing.JFrame {
                 lbl.setPreferredSize(new java.awt.Dimension(50, 50));
                 lbl.setBackground(new Color(40, 100, 28));
                 lbl.setBorder(new BevelBorder(BevelBorder.LOWERED));
-                lbl.setText("i" + i + "j" + j );
+//                lbl.setText("i" + i + "j" + j );
+                lbl.setEnabled(false);
                 this.panel.add(lbl);
 
                 lbls[i][j] = lbl;
@@ -95,9 +96,13 @@ public class OthelloInterface extends javax.swing.JFrame {
     {
         trace(1);
         lbls[3][4].setBackground(new Color(40, 100, 28));
+        lbls[3][4].setEnabled(true);
         lbls[4][3].setBackground(new Color(40, 100, 28));
+        lbls[4][3].setEnabled(true);
         lbls[3][3].setBackground(new Color(40, 100, 28));
+        lbls[3][3].setEnabled(true);
         lbls[4][4].setBackground(new Color(40, 100, 28));
+        lbls[4][4].setEnabled(true);
     }
     public void play(Point pos) {
         // Concat players arrays
@@ -110,6 +115,8 @@ public class OthelloInterface extends javax.swing.JFrame {
         //verify label if is empty
         if (game.verifyPosition(label)) 
         {
+            
+            
             // player 1
             if (tour) 
             {
@@ -122,7 +129,13 @@ public class OthelloInterface extends javax.swing.JFrame {
                
                 //add Jeton to player array 
                 game.getPlayer1().addJetons(label);
-                
+                                
+                //Disable All labels
+                for (int i = 0; i < 8; i++) 
+                    for (int j = 0; j < 8; j++) 
+                        if(lbls[i][j].getContent() == 0)
+                            lbls[i][j].setEnabled(false);
+            
                 //display possibilities to next player
                 trace(1);
                 
@@ -144,6 +157,12 @@ public class OthelloInterface extends javax.swing.JFrame {
                 
                 //add Jeton to player array
                 game.getPlayer2().addJetons(label);
+                
+                //Disable All labels
+                for (int i = 0; i < 8; i++) 
+                    for (int j = 0; j < 8; j++) 
+                        if(lbls[i][j].getContent() == 0)
+                            lbls[i][j].setEnabled(false);
                 
                 //display possibilities to next player
                 trace(2);
@@ -173,6 +192,7 @@ public class OthelloInterface extends javax.swing.JFrame {
     
 private void trace(int playerContent)
     {
+//        boolean win= true;
         try {
             for(int i=0;i<8;i++)
             {
@@ -184,26 +204,43 @@ private void trace(int playerContent)
                         if(verifyLine(i, lbls[i][j]) && verifyColumn(j, lbls[i][j]) && verifyDiagonal(lbls[i][j]) )
                         {   
                             //Column
-                            if(game.verifyPosition(lbls[i+1][j]))
+                            if(game.verifyPosition(lbls[i+1][j])){
                                 lbls[i+1][j].setBackground(Color.red);
-                            if(game.verifyPosition(lbls[i-1][j]))
+                                lbls[i+1][j].setEnabled(true);
+//                                win = false;
+                            }
+                            if(game.verifyPosition(lbls[i-1][j])){
                                 lbls[i-1][j].setBackground(Color.red);
-    //                        
+                                lbls[i-1][j].setEnabled(true);
+                          }
+    
                             //Ligne
-                            if(game.verifyPosition(lbls[i][j+1]))
+                            if(game.verifyPosition(lbls[i][j+1])){
                                 lbls[i][j+1].setBackground(Color.red);
-                            if(game.verifyPosition(lbls[i][j-1]))
+                                lbls[i][j+1].setEnabled(true);
+                            }
+                            if(game.verifyPosition(lbls[i][j-1])){
                                 lbls[i][j-1].setBackground(Color.red);
+                                lbls[i][j-1].setEnabled(true);
+                            }
 
                             //Diagonal
-                            if(game.verifyPosition(lbls[i+1][j+1]) && lbls[i-1][j-1].getContent()!= playerContent && lbls[i-1][j-1].getContent() != 0  )
+                            if(game.verifyPosition(lbls[i+1][j+1]) && lbls[i-1][j-1].getContent()!= playerContent && lbls[i-1][j-1].getContent() != 0  ){
                                 lbls[i+1][j+1].setBackground(Color.red);
-                            if(game.verifyPosition(lbls[i-1][j-1]) && lbls[i+1][j+1].getContent() != playerContent && lbls[i+1][j+1].getContent() != 0 )
+                                lbls[i+1][j+1].setEnabled(true);
+                            }
+                            if(game.verifyPosition(lbls[i-1][j-1]) && lbls[i+1][j+1].getContent() != playerContent && lbls[i+1][j+1].getContent() != 0 ){
                                 lbls[i-1][j-1].setBackground(Color.red);
-                            if(game.verifyPosition(lbls[i-1][j+1]) && lbls[i+1][j-1].getContent()!= playerContent && lbls[i+1][j-1].getContent() != 0 )
+                                lbls[i-1][j-1].setEnabled(true);
+                            }
+                            if(game.verifyPosition(lbls[i-1][j+1]) && lbls[i+1][j-1].getContent()!= playerContent && lbls[i+1][j-1].getContent() != 0 ){
                                 lbls[i-1][j+1].setBackground(Color.red);
-                            if(game.verifyPosition(lbls[i+1][j-1]) && lbls[i-1][j+1].getContent()!= playerContent && lbls[i-1][j+1].getContent() != 0 )
+                                lbls[i-1][j+1].setEnabled(true);
+                            }
+                            if(game.verifyPosition(lbls[i+1][j-1]) && lbls[i-1][j+1].getContent()!= playerContent && lbls[i-1][j+1].getContent() != 0 ){
                                 lbls[i+1][j-1].setBackground(Color.red);
+                                lbls[i+1][j-1].setEnabled(true);
+                            }
 
                         }
                     }
@@ -406,7 +443,9 @@ private void trace(int playerContent)
         // TODO add your handling code here:
         Point pos = new Point();
         pos.setLocation(evt.getPoint());
-        play(pos);
+        JLabel ana = (JLabel) panel.getComponentAt(pos);
+        if(ana.isEnabled() == true)
+            play(pos);
        
         //show matrix in console
          for(int i=0 ; i<8 ; i++)
