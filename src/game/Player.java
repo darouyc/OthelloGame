@@ -36,4 +36,7 @@ public class Player {
     {
         return this.jetons;
     }
+    public void removeJeton(JLabel lbl){
+        jetons.remove(lbl);
+    }
 }

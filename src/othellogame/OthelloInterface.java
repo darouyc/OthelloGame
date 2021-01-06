@@ -125,11 +125,12 @@ public class OthelloInterface extends javax.swing.JFrame {
                 
                 //add label to matrix with content 1 == white 
                 changeStat( label, 1);
+                
                 System.out.println("-----------done----------"); 
                
                 //add Jeton to player array 
                 game.getPlayer1().addJetons(label);
-                                
+                checkBetween(label,1 , game.getPlayer1(), game.getPlayer2());
                 //Disable All labels
                 for (int i = 0; i < 8; i++) 
                     for (int j = 0; j < 8; j++) 
@@ -153,11 +154,12 @@ public class OthelloInterface extends javax.swing.JFrame {
                 
                 //add label to matrix with content 2 == black
                 changeStat( label, 2);
+                
                 System.out.println("-----------done----------");
                 
                 //add Jeton to player array
                 game.getPlayer2().addJetons(label);
-                
+                checkBetween(label,2, game.getPlayer2(), game.getPlayer1());
                 //Disable All labels
                 for (int i = 0; i < 8; i++) 
                     for (int j = 0; j < 8; j++) 
@@ -332,6 +334,77 @@ private void trace(int playerContent)
             }
         }
      
+     }
+     public void checkBetween(JLabel lbl, int content, Player player1, Player player2){
+         int line = 0;
+         int column = 0;
+         for(int i = 0; i<8; i++){
+             for(int j = 0; j<8; j++){
+                 if(lbls[i][j] == lbl){
+                     line = i;
+                     column = j;
+                 }
+             }
+         }
+         
+            //reverse lines to other player
+             for(int j = 0; j<8; j++){
+                 if(lbls[line][j].getContent() == content && lbls[line][j] != lbl){
+                     if( column > j){
+                           for(int b = j+1; b < column; b++){
+                               lbls[line][b].setContent(content);
+                               player1.removeJeton(lbls[line][b]);
+                               player2.addJetons(lbls[line][b]);
+                               drawJeton(lbls[line][b], switchContent(content));
+                           }
+                    }
+                     if( column < j ){
+                           for(int b = column+1; b < j; b++){
+                               lbls[line][b].setContent(content);
+                               player1.removeJeton(lbls[line][b]);
+                               player2.addJetons(lbls[line][b]);
+                               drawJeton(lbls[line][b], switchContent(content));
+                           }
+                    }
+                     
+                 }
+             }
+             //reverse columns to other player
+             for(int i = 0; i<8; i++){
+                 if(lbls[i][column].getContent() == content && lbls[i][column] != lbl){
+                     if( line > i){
+                           for(int b = i+1; b < column; b++){
+                               lbls[b][column].setContent(content);
+                               player1.removeJeton(lbls[b][column]);
+                               player2.addJetons(lbls[b][column]);
+                               drawJeton(lbls[b][column], switchContent(content));
+                           }
+                    }
+                     if( line < i ){
+                           for(int b = line+1; b < i; b++){
+                               lbls[b][column].setContent(content);
+                               player1.removeJeton(lbls[b][column]);
+                               player2.addJetons(lbls[b][column]);
+                               drawJeton(lbls[b][column], switchContent(content));
+                           }
+                    }
+                     
+                 }
+             }
+             
+     }
+     
+     public int switchContent(int content){
+         if(content == 1)
+             return 2;
+         return 1;
+     }
+     
+     public void drawJeton(JLabel lbl, int content){
+         if(content == 1)
+             lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
+         else if(content == 2)
+             lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
      }
 
     /**
