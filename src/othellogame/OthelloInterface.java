@@ -5,6 +5,7 @@
  */
 package othellogame;
 
+import Authentication.Authentication;
 import game.Game;
 import game.MyLabel;
 import game.Player;

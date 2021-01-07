@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package othellogame;
+package Authentication;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -16,21 +15,16 @@ import javax.swing.JOptionPane;
  *
  * @author Abdellah
  */
-public class Authentication extends javax.swing.JFrame {
+public class SignUp extends javax.swing.JFrame {
     
     Connection con = null;
     PreparedStatement pst = null;
-    ResultSet rs = null;
-    
-    public String getUser()
-   {
-       return txtUsername.getText();
-   }
+
 
     /**
-     * Creates new form Authentication
+     * Creates new form SignUp
      */
-    public Authentication() {
+    public SignUp() {
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -49,25 +43,17 @@ public class Authentication extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
         txtPassword = new javax.swing.JPasswordField();
-        login = new javax.swing.JButton();
         signUp = new javax.swing.JButton();
-        continueAsGuest = new javax.swing.JButton();
+        goBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setText("Authentication");
+        jLabel1.setText("SignUp");
 
         jLabel2.setText("Username:");
 
         jLabel3.setText("Password:");
-
-        login.setText("Login");
-        login.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginActionPerformed(evt);
-            }
-        });
 
         signUp.setText("SignUp");
         signUp.addActionListener(new java.awt.event.ActionListener() {
@@ -76,10 +62,10 @@ public class Authentication extends javax.swing.JFrame {
             }
         });
 
-        continueAsGuest.setText("Continue as a Guest");
-        continueAsGuest.addActionListener(new java.awt.event.ActionListener() {
+        goBack.setText("Go Back");
+        goBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                continueAsGuestActionPerformed(evt);
+                goBackActionPerformed(evt);
             }
         });
 
@@ -88,87 +74,79 @@ public class Authentication extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(48, 48, 48)
+                .addGap(151, 151, 151)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(continueAsGuest)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(login))
-                    .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(signUp))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtUsername)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))))
+                            .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
-                .addComponent(signUp)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addComponent(goBack)
+                .addGap(11, 11, 11))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(26, 26, 26)
                 .addComponent(jLabel1)
-                .addGap(28, 28, 28)
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(47, 47, 47)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(login)
                     .addComponent(signUp)
-                    .addComponent(continueAsGuest))
-                .addGap(42, 42, 42))
+                    .addComponent(goBack))
+                .addGap(41, 41, 41))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
+    private void signUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpActionPerformed
         // TODO add your handling code here:
         try{
-            String query = "SELECT * FROM `authentication` WHERE username = ? and password = ?";
+            String query = "INSERT INTO `authentication`(`username`, `password`) VALUES (?,?)";
             con = DriverManager.getConnection("jdbc:mysql://localhost/othellogame", "root" , "");
             pst = con.prepareStatement(query);
             pst.setString(1, txtUsername.getText());
             pst.setString(2, txtPassword.getText());
-            rs = pst.executeQuery();
-            if(rs.next()){
-                OthelloInterface othello = new OthelloInterface();
-                othello.setUser(txtUsername.getText());
-                othello.setVisible(true);
+            if(txtUsername.getText().length() > 0 || txtPassword.getText().length() > 0){
+                pst.execute();
                 dispose();
-            }else {
-                JOptionPane.showMessageDialog(this, "Your username or password is incorrect !");
-            }
+                Authentication auth = new Authentication();
+                auth.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Please enter a username and password to SignUp!");
+            }   
         }
         catch(SQLException ex){
             System.out.print(ex);
+            JOptionPane.showMessageDialog(this, "The Username you entered is already used please try a diffrent one!");
         }
-    }//GEN-LAST:event_loginActionPerformed
-
-    private void signUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpActionPerformed
-        // TODO add your handling code here:
-        SignUp sign = new SignUp();
-        dispose();
-        sign.setVisible(true);
-        
     }//GEN-LAST:event_signUpActionPerformed
 
-    private void continueAsGuestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueAsGuestActionPerformed
+    private void goBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackActionPerformed
         // TODO add your handling code here:
-        OthelloInterface othello = new OthelloInterface();
-        othello.setDisconnectButton("Connect");
-        othello.setVisible(true);
         dispose();
-    }//GEN-LAST:event_continueAsGuestActionPerformed
+        Authentication auth = new Authentication();
+        auth.setVisible(true);
+    }//GEN-LAST:event_goBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -187,30 +165,29 @@ public class Authentication extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Authentication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Authentication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Authentication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Authentication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Authentication().setVisible(true);
+                new SignUp().setVisible(true);
             }
         });
-    }
+    };
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton continueAsGuest;
+    private javax.swing.JButton goBack;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JButton login;
     private javax.swing.JButton signUp;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
