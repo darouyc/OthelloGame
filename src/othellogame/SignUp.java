@@ -8,7 +8,6 @@ package othellogame;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -16,16 +15,16 @@ import javax.swing.JOptionPane;
  *
  * @author Abdellah
  */
-public class Authentication extends javax.swing.JFrame {
+public class SignUp extends javax.swing.JFrame {
     
     Connection con = null;
     PreparedStatement pst = null;
-    ResultSet rs = null;
+
 
     /**
-     * Creates new form Authentication
+     * Creates new form SignUp
      */
-    public Authentication() {
+    public SignUp() {
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -50,20 +49,20 @@ public class Authentication extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setText("Authentication");
+        jLabel1.setText("SignUp");
 
         jLabel2.setText("Username:");
 
         jLabel3.setText("Password:");
 
-        jButton1.setText("Login");
+        jButton1.setText("SignUp");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("SignUp");
+        jButton2.setText("Go Back");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -75,40 +74,45 @@ public class Authentication extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(48, 48, 48)
+                .addGap(151, 151, 151)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtUsername)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))))
+                            .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(11, 11, 11))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(26, 26, 26)
                 .addComponent(jLabel1)
-                .addGap(28, 28, 28)
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(47, 47, 47)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addGap(42, 42, 42))
+                .addGap(41, 41, 41))
         );
 
         pack();
@@ -117,30 +121,28 @@ public class Authentication extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try{
-            String query = "SELECT * FROM `authentication` WHERE username = ? and password = ?";
+            String query = "INSERT INTO `authentication`(`username`, `password`) VALUES (?,?)";
             con = DriverManager.getConnection("jdbc:mysql://localhost/othellogame", "root" , "");
             pst = con.prepareStatement(query);
             pst.setString(1, txtUsername.getText());
             pst.setString(2, txtPassword.getText());
-            rs = pst.executeQuery();
-            if(rs.next()){
-                OthelloInterface othello = new OthelloInterface();
-                othello.setVisible(true);
-                dispose();
-            }else {
-                JOptionPane.showMessageDialog(this, "You dont have an account please SignUp to explore the game!");
-            }
+            pst.execute();
+            dispose();
+            Authentication auth = new Authentication();
+            auth.setVisible(true);
+            
         }
         catch(SQLException ex){
             System.out.print(ex);
+            JOptionPane.showMessageDialog(this, "The Username you entered is already used please try a diffrent one!");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        SignUp signUp = new SignUp();
         dispose();
-        signUp.setVisible(true);
+        Authentication auth = new Authentication();
+        auth.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -160,23 +162,23 @@ public class Authentication extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Authentication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Authentication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Authentication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Authentication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Authentication().setVisible(true);
+                new SignUp().setVisible(true);
             }
         });
-    }
+    };
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
