@@ -126,11 +126,14 @@ public class SignUp extends javax.swing.JFrame {
             pst = con.prepareStatement(query);
             pst.setString(1, txtUsername.getText());
             pst.setString(2, txtPassword.getText());
-            pst.execute();
-            dispose();
-            Authentication auth = new Authentication();
-            auth.setVisible(true);
-            
+            if(txtUsername.getText().length() > 0 || txtPassword.getText().length() > 0){
+                pst.execute();
+                dispose();
+                Authentication auth = new Authentication();
+                auth.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Please enter a username and password to SignUp!");
+            }   
         }
         catch(SQLException ex){
             System.out.print(ex);
