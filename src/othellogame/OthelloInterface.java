@@ -62,7 +62,7 @@ public class OthelloInterface extends javax.swing.JFrame {
                 lbl.setPreferredSize(new java.awt.Dimension(50, 50));
                 lbl.setBackground(new Color(40, 100, 28));
                 lbl.setBorder(new BevelBorder(BevelBorder.LOWERED));
-//                lbl.setText("i" + i + "j" + j );
+                lbl.setText("i" + i + "j" + j );
                 lbl.setEnabled(false);
                 this.panel.add(lbl);
 
@@ -338,6 +338,10 @@ private void trace(int playerContent)
      public void checkBetween(JLabel lbl, int content, Player player1, Player player2){
          int line = 0;
          int column = 0;
+         int nextLine = 0;
+         int nextColumn = 0;
+         
+         //get my label indexes
          for(int i = 0; i<8; i++){
              for(int j = 0; j<8; j++){
                  if(lbls[i][j] == lbl){
@@ -391,6 +395,39 @@ private void trace(int playerContent)
                      
                  }
              }
+             
+             //Reverse diagonale to other player
+             //Calcul distance entre diag et position de label
+                int dist = 0;
+
+                //To localize the diagonal.column for each row
+                int diagonal = 0;
+
+                for(int lineDia = 0; lineDia<8 ; lineDia++)
+                    for(int columnDia = 0; columnDia<8 ; columnDia++){
+                        if(lineDia == columnDia) diagonal = columnDia;
+                        if(lbls[lineDia][columnDia] == lbl && columnDia>lineDia)
+                            dist = columnDia - diagonal;
+                        if(lbls[lineDia][columnDia] == lbl && columnDia<lineDia)
+                            dist = diagonal - columnDia;
+                    }   
+
+                //Get next position
+                for(int lineDia = 0; lineDia<8 ; lineDia++)
+                    for(int columnDia = 0; columnDia<8 ; columnDia++){
+                        if(lineDia == columnDia && columnDia>lineDia && (columnDia+dist < 8) )
+                            if(lbls[lineDia][columnDia+dist].getContent() == content && lbls[lineDia][columnDia+dist]!=lbl){
+                                nextColumn = columnDia;
+                                nextLine = lineDia;
+                            }
+                        if(lineDia == columnDia && columnDia <= lineDia && (columnDia-dist >= 0))
+                            if(lbls[lineDia][columnDia - dist].getContent() != 0 && lbls[lineDia][columnDia - dist]!=lbl){
+                                nextColumn = columnDia;
+                                nextLine = lineDia;
+                            }
+                    }
+               // if(column < nextColumn)
+                    
              
      }
      
