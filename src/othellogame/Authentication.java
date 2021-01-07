@@ -156,9 +156,9 @@ public class Authentication extends javax.swing.JFrame {
 
     private void signUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpActionPerformed
         // TODO add your handling code here:
-        SignUp signUp = new SignUp();
+        SignUp sign = new SignUp();
         dispose();
-        signUp.setVisible(true);
+        sign.setVisible(true);
         
     }//GEN-LAST:event_signUpActionPerformed
 

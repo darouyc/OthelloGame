@@ -478,6 +478,8 @@ private void trace(int playerContent)
         user = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Othello");
+        setForeground(java.awt.Color.white);
 
         panel.setBackground(new java.awt.Color(40, 100, 28));
         panel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -607,9 +609,9 @@ private void trace(int playerContent)
 
     private void disconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disconnectActionPerformed
         // TODO add your handling code here:
-                dispose();
-                Authentication auth = new Authentication();
-                auth.setVisible(true);
+        dispose();
+        Authentication auth = new Authentication();
+        auth.setVisible(true);
     }//GEN-LAST:event_disconnectActionPerformed
 
     /**
