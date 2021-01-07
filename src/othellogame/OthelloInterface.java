@@ -43,12 +43,6 @@ public class OthelloInterface extends javax.swing.JFrame {
     public OthelloInterface() {
         initComponents();
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(OthelloInterface.EXIT_ON_CLOSE);
-        
-        /*Authentication auth = new Authentication();
-        String username = auth.getUser();
-        
-        user.setText(username);*/
         
         //create grille 
         GridLayout grdlyt = new GridLayout(8, 8);
@@ -477,6 +471,12 @@ private void trace(int playerContent)
         lblScoreBlack = new javax.swing.JLabel();
         disconnect = new javax.swing.JButton();
         user = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        newGame = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        exit = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Othello");
@@ -551,6 +551,34 @@ private void trace(int playerContent)
         user.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         user.setText("Guest");
 
+        jMenu1.setText("File");
+
+        newGame.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        newGame.setText("New Game");
+        newGame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newGameActionPerformed(evt);
+            }
+        });
+        jMenu1.add(newGame);
+        jMenu1.add(jSeparator1);
+
+        exit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        exit.setText("Exit");
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
+        jMenu1.add(exit);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -577,13 +605,13 @@ private void trace(int playerContent)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(disconnect)
                     .addComponent(user))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)))
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
         pack();
@@ -614,6 +642,16 @@ private void trace(int playerContent)
         Authentication auth = new Authentication();
         auth.setVisible(true);
     }//GEN-LAST:event_disconnectActionPerformed
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_exitActionPerformed
+
+    private void newGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGameActionPerformed
+        // TODO add your handling code here:
+        panel.repaint();
+    }//GEN-LAST:event_newGameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -664,11 +702,17 @@ private void trace(int playerContent)
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton disconnect;
+    private javax.swing.JMenuItem exit;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JLabel lblBlack;
     private javax.swing.JLabel lblScoreBlack;
     private javax.swing.JLabel lblScoreWhite;
     private javax.swing.JLabel lblWhite;
+    private javax.swing.JMenuItem newGame;
     private javax.swing.JPanel panel;
     private javax.swing.JLabel user;
     // End of variables declaration//GEN-END:variables
