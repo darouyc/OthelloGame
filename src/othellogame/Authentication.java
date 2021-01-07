@@ -21,6 +21,11 @@ public class Authentication extends javax.swing.JFrame {
     Connection con = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
+    
+    public String getUser()
+   {
+       return txtUsername.getText();
+   }
 
     /**
      * Creates new form Authentication
@@ -44,8 +49,9 @@ public class Authentication extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
         txtPassword = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        login = new javax.swing.JButton();
+        signUp = new javax.swing.JButton();
+        continueAsGuest = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,17 +62,24 @@ public class Authentication extends javax.swing.JFrame {
 
         jLabel3.setText("Password:");
 
-        jButton1.setText("Login");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        login.setText("Login");
+        login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                loginActionPerformed(evt);
             }
         });
 
-        jButton2.setText("SignUp");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        signUp.setText("SignUp");
+        signUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                signUpActionPerformed(evt);
+            }
+        });
+
+        continueAsGuest.setText("Continue as a Guest");
+        continueAsGuest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                continueAsGuestActionPerformed(evt);
             }
         });
 
@@ -77,7 +90,10 @@ public class Authentication extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(continueAsGuest)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(login))
                     .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -88,7 +104,7 @@ public class Authentication extends javax.swing.JFrame {
                             .addComponent(txtUsername)
                             .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(signUp)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -106,15 +122,16 @@ public class Authentication extends javax.swing.JFrame {
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(login)
+                    .addComponent(signUp)
+                    .addComponent(continueAsGuest))
                 .addGap(42, 42, 42))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         // TODO add your handling code here:
         try{
             String query = "SELECT * FROM `authentication` WHERE username = ? and password = ?";
@@ -125,23 +142,33 @@ public class Authentication extends javax.swing.JFrame {
             rs = pst.executeQuery();
             if(rs.next()){
                 OthelloInterface othello = new OthelloInterface();
+                othello.setUser(txtUsername.getText());
                 othello.setVisible(true);
                 dispose();
             }else {
-                JOptionPane.showMessageDialog(this, "You dont have an account please SignUp to explore the game!");
+                JOptionPane.showMessageDialog(this, "Your username or password is incorrect !");
             }
         }
         catch(SQLException ex){
             System.out.print(ex);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_loginActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void signUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpActionPerformed
         // TODO add your handling code here:
         SignUp signUp = new SignUp();
         dispose();
         signUp.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+        
+    }//GEN-LAST:event_signUpActionPerformed
+
+    private void continueAsGuestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueAsGuestActionPerformed
+        // TODO add your handling code here:
+        OthelloInterface othello = new OthelloInterface();
+        othello.setDisconnectButton("Connect");
+        othello.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_continueAsGuestActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,11 +206,12 @@ public class Authentication extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton continueAsGuest;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton login;
+    private javax.swing.JButton signUp;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
