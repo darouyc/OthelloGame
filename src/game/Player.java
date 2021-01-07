@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * @author Hp EliteBook
  */
 public class Player {
-    ArrayList<JLabel> jetons;
+    ArrayList<MyLabel> jetons;
   
     public Player()
     {
@@ -23,7 +23,7 @@ public class Player {
     }
   
  
-    public void addJetons(JLabel pos)
+    public void addJetons(MyLabel pos)
     {
         jetons.add(pos);
     }
@@ -32,11 +32,11 @@ public class Player {
         return jetons.size();
     }
     
-    public ArrayList<JLabel> getJetons()
+    public ArrayList<MyLabel> getJetons()
     {
         return this.jetons;
     }
-    public void removeJeton(JLabel lbl){
+    public void removeJeton(MyLabel lbl){
         jetons.remove(lbl);
     }
 }

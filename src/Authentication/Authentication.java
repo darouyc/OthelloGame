@@ -10,13 +10,15 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import othellogame.OthelloInterface;
 
 /**
  *
- * @author Abdellah
+ * @author 
  */
 public class Authentication extends javax.swing.JFrame {
     
@@ -137,6 +139,7 @@ public class Authentication extends javax.swing.JFrame {
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         // TODO add your handling code here:
         try{
+            
             String query = "SELECT * FROM `authentication` WHERE username = ? and password = ?";
             con = DriverManager.getConnection("jdbc:mysql://localhost/othellogame", "root" , "");
             pst = con.prepareStatement(query);
@@ -154,7 +157,7 @@ public class Authentication extends javax.swing.JFrame {
         }
         catch(SQLException ex){
             System.out.print(ex);
-        }
+        } 
     }//GEN-LAST:event_loginActionPerformed
 
     private void signUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpActionPerformed

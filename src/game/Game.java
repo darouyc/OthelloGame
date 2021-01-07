@@ -14,7 +14,7 @@ import javax.swing.JLabel;
  * @author Hp EliteBook
  */
     public class Game {
-        ArrayList<JLabel> jetons;
+        ArrayList<MyLabel> jetons;
         Player player1;
         Player player2;
         MyLabel [][] lbls;
@@ -54,9 +54,30 @@ import javax.swing.JLabel;
         this.lbls = lbls;
         //lbls[1][1].setBackground(Color.red);
     }
-    public ArrayList<JLabel> getJetons()
+    public ArrayList<MyLabel> getJetons()
     {
         return this.jetons;
+    }
+    public Player getPlayer(int content)
+    {
+        if(content == 1)
+        {
+            return player1;
+        }
+        if(content == 2)
+        {
+            return player2;
+        }
+        return null;
+    }
+    public MyLabel [][] getLabels()
+    {
+        return lbls;
+    }
+    public MyLabel getLabel(int i , int j)
+    {
+        return lbls[i][j];
+        
     }
     
 }
