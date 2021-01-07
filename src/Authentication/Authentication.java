@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import othellogame.OthelloInterface;
 
 /**
@@ -34,6 +35,7 @@ public class Authentication extends javax.swing.JFrame {
     public Authentication() {
         initComponents();
         setLocationRelativeTo(null);
+        SwingUtilities.getRootPane(login).setDefaultButton(login);
     }
 
     /**

@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -27,6 +28,7 @@ public class SignUp extends javax.swing.JFrame {
     public SignUp() {
         initComponents();
         setLocationRelativeTo(null);
+        SwingUtilities.getRootPane(signUp).setDefaultButton(signUp);
     }
 
     /**
