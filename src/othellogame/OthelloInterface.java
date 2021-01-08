@@ -38,17 +38,17 @@ public class OthelloInterface extends javax.swing.JFrame {
     Game game;
 
     boolean tour = false;
-    MyLabel[][] lbls = new MyLabel[8][8];
+    // MyLabel[][] lbls = new MyLabel[8][8];
 
     public OthelloInterface() {
         initComponents();
         setLocationRelativeTo(null);
-        
+
         //create grille 
         GridLayout grdlyt = new GridLayout(8, 8);
-        
+
         //initialization game
-        game = new Game(lbls);
+        game = new Game(this.panel);
         this.panel.setLayout(grdlyt);
 
         //Score icon
@@ -56,463 +56,475 @@ public class OthelloInterface extends javax.swing.JFrame {
         lblBlack.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
 
         // create labels
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                MyLabel lbl = new MyLabel(" ");
-                lbl.setPreferredSize(new java.awt.Dimension(50, 50));
-                lbl.setBackground(new Color(40, 100, 28));
-                lbl.setBorder(new BevelBorder(BevelBorder.LOWERED));
-                lbl.setText("i" + i + "j" + j );
-                lbl.setEnabled(false);
-                this.panel.add(lbl);
-
-                lbls[i][j] = lbl;
-                // initial stat  
-                if (i == 3 && j == 4 || i == 4 && j == 3) {
-                    game.getPlayer1().addJetons(lbl);
-                    lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
-                    lbl.setContent(2);
-                    
-                }
-                if (i == 3 && j == 3 || i == 4 && j == 4) {
-                    game.getPlayer2().addJetons(lbl);
-                    lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
-                    lbl.setContent(1);
-                }
-                
-                
-            }
-        }
-
+//        for (int i = 0; i < 8; i++) {
+//            for (int j = 0; j < 8; j++) {
+//                MyLabel lbl = new MyLabel(" ");
+//                lbl.setPreferredSize(new java.awt.Dimension(50, 50));
+//                lbl.setBackground(new Color(40, 100, 28));
+//                lbl.setBorder(new BevelBorder(BevelBorder.LOWERED));
+//                lbl.setText("i" + i + "j" + j );
+//                lbl.setEnabled(false);
+//                this.panel.add(lbl);
+//
+//                game.lbls[i][j] = lbl;
+//                // initial stat  
+//                if (i == 3 && j == 4 || i == 4 && j == 3) {
+//                    lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
+//                    lbl.setContent(2);
+//                    game.getPlayer1().addJetons(lbl);
+//                }
+//                if (i == 3 && j == 3 || i == 4 && j == 4) {
+//                    
+//                    lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
+//                    lbl.setContent(1);
+//                    game.getPlayer2().addJetons(lbl);
+//                }
+//                
+//                
+//            }
+//       }
         // show score for players
         lblScoreBlack.setText(" " + game.getPlayer1().getScore());
         lblScoreWhite.setText(" " + game.getPlayer2().getScore());
 
         //Update matrix
-        game.setLbels(lbls);
         first();
     }
-    public void first()
-    {
+
+    public void first() {
         trace(1);
-        lbls[3][4].setBackground(new Color(40, 100, 28));
-        lbls[3][4].setEnabled(true);
-        lbls[4][3].setBackground(new Color(40, 100, 28));
-        lbls[4][3].setEnabled(true);
-        lbls[3][3].setBackground(new Color(40, 100, 28));
-        lbls[3][3].setEnabled(true);
-        lbls[4][4].setBackground(new Color(40, 100, 28));
-        lbls[4][4].setEnabled(true);
+        game.getLabel(3, 4).setBackground(new Color(40, 100, 28));
+        game.getLabel(3, 4).setEnabled(true);
+        game.getLabel(4, 3).setBackground(new Color(40, 100, 28));
+        game.getLabel(4, 3).setEnabled(true);
+        game.getLabel(3, 3).setBackground(new Color(40, 100, 28));
+        game.getLabel(3, 3).setEnabled(true);
+        game.getLabel(4, 4).setBackground(new Color(40, 100, 28));
+        game.getLabel(4, 4).setEnabled(true);
     }
+
     public void play(Point pos) {
-        // Concat players arrays
-        game.concatArrays();
+       
         changePlayer();
-        
+
         //get selected label
         MyLabel label = (MyLabel) this.panel.getComponentAt(pos);
-        
+
         //verify label if is empty
-        if (game.verifyPosition(label)) 
-        {
-            
-            
+        if (game.verifyPosition(label)) {
+
             // player 1
-            if (tour) 
-            {
+            if (tour) {
                 //add white icon
                 label.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
-                
+                label.setContent(1);
                 //add label to matrix with content 1 == white 
-                changeStat( label, 1);
-                
-                System.out.println("-----------done----------"); 
-               
+                changeStat(label);
+
+                System.out.println("-----------done----------");
+
                 //add Jeton to player array 
-                game.getPlayer1().addJetons(label);
+                //game.getPlayer1().addJetons(label);
                 checkBetween(label);
+                game.displayJetons();
                 //Disable All labels
-                for (int i = 0; i < 8; i++) 
-                    for (int j = 0; j < 8; j++) 
-                        if(lbls[i][j].getContent() == 0)
-                            lbls[i][j].setEnabled(false);
-            
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
+                        if (game.getLabel(i, j).getContent() == 0) {
+                            game.getLabel(i, j).setEnabled(false);
+                        }
+                    }
+                }
+
                 //display possibilities to next player
                 trace(1);
-                
-                
+
                 //change player
                 tour = false;
                 label.setBackground(new Color(40, 100, 28));
-            }  
-               //player 2 
+            } //player 2 
             else {
                 //add black icon
                 label.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
-                
+                label.setContent(2);
                 //add label to matrix with content 2 == black
-                changeStat( label, 2);
-                
+                changeStat(label);
+
                 System.out.println("-----------done----------");
-                
+
                 //add Jeton to player array
-                game.getPlayer2().addJetons(label);
+                //game.getPlayer2().addJetons(label);
                 checkBetween(label);
+                game.displayJetons();
+
                 //Disable All labels
-                for (int i = 0; i < 8; i++) 
-                    for (int j = 0; j < 8; j++) 
-                        if(lbls[i][j].getContent() == 0)
-                            lbls[i][j].setEnabled(false);
-                
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
+                        if (game.getLabel(i, j).getContent() == 0) {
+                            game.getLabel(i, j).setEnabled(false);
+                        }
+                    }
+                }
+
                 //display possibilities to next player
                 trace(2);
-                
-               
-                
-                 //change player
+
+                //change player
                 tour = true;
                 label.setBackground(new Color(40, 100, 28));
             }
-        } else{
-                // used position
-                System.out.println("------Not available-------");
-                
-                // display possibilities
-                if (tour) {
-                    trace(2);
-                }
-                else {
-                    trace(1);
-                }
-               }
-                //Update score
-                lblScoreBlack.setText(" " + game.getPlayer2().getScore());
-                //Update score
-                lblScoreWhite.setText(" " + game.getPlayer1().getScore());
-                
+        } else {
+            // used position
+            System.out.println("------Not available-------");
 
-}
-    
-private void trace(int playerContent)
-    {
+            // display possibilities
+            if (tour) {
+                trace(2);
+            } else {
+                trace(1);
+            }
+        }
+        //Update score
+        lblScoreBlack.setText(" " + game.getPlayer2().getScore());
+        //Update score
+        lblScoreWhite.setText(" " + game.getPlayer1().getScore());
+
+    }
+
+    private void trace(int playerContent) {
 //        boolean win= true;
         try {
-            for(int i=0;i<8;i++)
-            {
-                for(int j=0; j<8 ; j++)
-                {
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
                     //get used postion with content 
-                    if(lbls[i][j].getContent() == playerContent )
-                    {
-                        if(verifyLine(i, lbls[i][j]) && verifyColumn(j, lbls[i][j]) && verifyDiagonal(lbls[i][j]) )
-                        {   
+                    if (game.getLabel(i, j).getContent() == playerContent) {
+                        if (verifyColumn(j, game.getLabel(i, j))) 
+                        {
                             //Column
-                            if(game.verifyPosition(lbls[i+1][j])){
-                                lbls[i+1][j].setBackground(Color.red);
-                                lbls[i+1][j].setEnabled(true);
+                            if (game.verifyPosition(game.getLabel(i + 1, j))) {
+                                game.getLabel(i + 1, j).setBackground(Color.red);
+                                game.getLabel(i + 1, j).setEnabled(true);
 //                                win = false;
                             }
-                            if(game.verifyPosition(lbls[i-1][j])){
-                                lbls[i-1][j].setBackground(Color.red);
-                                lbls[i-1][j].setEnabled(true);
-                          }
-    
-                            //Ligne
-                            if(game.verifyPosition(lbls[i][j+1])){
-                                lbls[i][j+1].setBackground(Color.red);
-                                lbls[i][j+1].setEnabled(true);
+                        
+                            if (game.verifyPosition(game.getLabel(i - 1, j))) {
+                                game.getLabel(i - 1, j).setBackground(Color.red);
+                                game.getLabel(i - 1, j).setEnabled(true);
                             }
-                            if(game.verifyPosition(lbls[i][j-1])){
-                                lbls[i][j-1].setBackground(Color.red);
-                                lbls[i][j-1].setEnabled(true);
+                        }
+                            //Ligne
+                            if(verifyLine(i, game.getLabel(i, j)))
+                            {
+                                if (game.verifyPosition(game.getLabel(i, j + 1))) {
+                                    game.getLabel(i, j + 1).setBackground(Color.red);
+                                    game.getLabel(i, j + 1).setEnabled(true);
+                                }
+                                if (game.verifyPosition(game.getLabel(i, j - 1))) {
+                                    game.getLabel(i, j - 1).setBackground(Color.red);
+                                    game.getLabel(i, j - 1).setEnabled(true);
+                                }
                             }
 
                             //Diagonal
-                            if(game.verifyPosition(lbls[i+1][j+1]) && lbls[i-1][j-1].getContent()!= playerContent && lbls[i-1][j-1].getContent() != 0  ){
-                                lbls[i+1][j+1].setBackground(Color.red);
-                                lbls[i+1][j+1].setEnabled(true);
-                            }
-                            if(game.verifyPosition(lbls[i-1][j-1]) && lbls[i+1][j+1].getContent() != playerContent && lbls[i+1][j+1].getContent() != 0 ){
-                                lbls[i-1][j-1].setBackground(Color.red);
-                                lbls[i-1][j-1].setEnabled(true);
-                            }
-                            if(game.verifyPosition(lbls[i-1][j+1]) && lbls[i+1][j-1].getContent()!= playerContent && lbls[i+1][j-1].getContent() != 0 ){
-                                lbls[i-1][j+1].setBackground(Color.red);
-                                lbls[i-1][j+1].setEnabled(true);
-                            }
-                            if(game.verifyPosition(lbls[i+1][j-1]) && lbls[i-1][j+1].getContent()!= playerContent && lbls[i-1][j+1].getContent() != 0 ){
-                                lbls[i+1][j-1].setBackground(Color.red);
-                                lbls[i+1][j-1].setEnabled(true);
-                            }
-
+                            if(verifyDiagonal(game.getLabel(i, j)))
+                            {
+                                if (game.verifyPosition(game.getLabel(i + 1, j + 1)) && game.getLabel(i - 1, j - 1).getContent() != playerContent && game.getLabel(i - 1, j - 1).getContent() != 0) {
+                                    game.getLabel(i + 1, j + 1).setBackground(Color.red);
+                                    game.getLabel(i + 1, j + 1).setEnabled(true);
+                                }
+                                if (game.verifyPosition(game.getLabel(i - 1, j - 1)) && game.getLabel(i + 1, j + 1).getContent() != playerContent && game.getLabel(i + 1, j + 1).getContent() != 0) {
+                                    game.getLabel(i - 1, j - 1).setBackground(Color.red);
+                                    game.getLabel(i - 1, j - 1).setEnabled(true);
+                                }
+                                if (game.verifyPosition(game.getLabel(i - 1, j + 1)) && game.getLabel(i + 1, j - 1).getContent() != playerContent && game.getLabel(i + 1, j - 1).getContent() != 0) {
+                                    game.getLabel(i - 1, j + 1).setBackground(Color.red);
+                                    game.getLabel(i - 1, j + 1).setEnabled(true);
+                                }
+                                if (game.verifyPosition(game.getLabel(i + 1, j - 1)) && game.getLabel(i - 1, j + 1).getContent() != playerContent && game.getLabel(i - 1, j + 1).getContent() != 0) {
+                                    game.getLabel(i + 1, j - 1).setBackground(Color.red);
+                                    game.getLabel(i + 1, j - 1).setEnabled(true);
+                                }
+                                
                         }
                     }
                 }
             }
         } catch (Exception e) {
-            
+
         }
-        
-        
-         
+
     }
+
     //line
-    public boolean verifyLine(int line, MyLabel lbl)
-    {
-        for(int column = 0; column<8 ; column++)
-        {
-            if(lbls[line][column].getContent() != 0 && lbls[line][column]!=lbl)
-            {
+    public boolean verifyLine(int line, MyLabel lbl) {
+        for (int column = 0; column < 8; column++) {
+            if (game.getLabel(line, column).getContent() == switchContent(lbl.getContent()) && game.getLabel(line, column) != lbl) {
                 return true;
             }
         }
         return false;
     }
+
     //column 
-        public boolean verifyColumn(int column, MyLabel lbl)
-    {
-        for(int line = 0; line<8 ; line++)
-            if(lbls[line][column].getContent() != 0 && lbls[line][column]!=lbl)
-                return true;        
+    public boolean verifyColumn(int column, MyLabel lbl) {
+        for (int line = 0; line < 8; line++) {
+            if (game.getLabel(line, column).getContent() == switchContent(lbl.getContent()) && game.getLabel(line, column) != lbl) {
+                return true;
+            }
+        }
         return false;
     }
-            //diagonale
-        public boolean verifyDiagonal(MyLabel lbl)
-    {
+    //diagonale
+
+    public boolean verifyDiagonal(MyLabel lbl) {
         //Calcul distance entre diag et position de label
         int dist = 0;
-        
+
         //To localize the diagonal.column for each row
         int diagonal = 0;
-        
-        for(int line = 0; line<8 ; line++)
-            for(int column = 0; column<8 ; column++){
-                if(line == column) diagonal = column;
-                if(lbls[line][column] == lbl && column>line)
+
+        for (int line = 0; line < 8; line++) {
+            for (int column = 0; column < 8; column++) {
+                if (line == column) {
+                    diagonal = column;
+                }
+                if (game.getLabel(line, column) == lbl && column > line) {
                     dist = column - diagonal;
-                if(lbls[line][column] == lbl && column<line)
+                }
+                if (game.getLabel(line, column) == lbl && column < line) {
                     dist = diagonal - column;
-            }   
-        
-        
-        for(int line = 0; line<8 ; line++)
-            for(int column = 0; column<8 ; column++){
-                if( column>line && (column+dist < 8) )
-                    if(lbls[line][column+dist].getContent() != 0 && lbls[line][column+dist]!=lbl)
-                        return true;
-                if(column <= line && (column-dist >= 0))
-                    if(lbls[line][column - dist].getContent() != 0 && lbls[line][column - dist]!=lbl)
-                        return true;  
+                }
             }
-        
+        }
+
+        for (int line = 0; line < 8; line++) {
+            for (int column = 0; column < 8; column++) {
+                if (column > line && (column + dist < 8)) {
+                    if (game.getLabel(line, column + dist).getContent() == switchContent(lbl.getContent()) && game.getLabel(line, column + dist) != lbl) {
+                        return true;
+                    }
+                }
+                if (column <= line && (column - dist >= 0)) {
+                    if (game.getLabel(line, column - dist).getContent() == switchContent(lbl.getContent()) && game.getLabel(line, column - dist) != lbl) {
+                        return true;
+                    }
+                }
+            }
+        }
 
         return false;
     }
-     public void changePlayer()
-     {
-          for(int i=0;i<8;i++)
-        {
-            for(int j=0; j<8 ; j++)
-            {
-                lbls[i][j].setBackground(new Color(40, 100, 28));
+
+    public void changePlayer() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                game.getLabel(i, j).setBackground(new Color(40, 100, 28));
             }
         }
-     }
-     
-     public void changeStat(MyLabel pos, int content)
-    {
-       for(int i=0;i<8;i++)
-        {
-            for(int j=0; j<8 ; j++)
-            {
+    }
+
+    public void changeStat(MyLabel pos) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
                 //get Label from matrix and change state from 0 == empty to 1 == white or 2 == black
-                if(lbls[i][j]==pos)
-                {
-                    lbls[i][j].setContent(content);
-                    lbls[i][j].setBackground(new Color(40, 100, 28));
-                    game.setLbels(lbls);
+                if (game.getLabel(i, j) == pos) {
+                    System.out.println("change stat");
+                    game.getLabel(i, j).setContent(pos.getContent());
+                    game.getLabel(i, j).setBackground(new Color(40, 100, 28));
+                    if (pos.getContent() == 1) {
+                        game.getPlayer1().addJetons(game.getLabel(i, j));
+                    }
+
+                    if (pos.getContent() == 2) {
+                        game.getPlayer2().addJetons(game.getLabel(i, j));
+                    }
+                    //game.setLbels(lbls);
                 }
             }
         }
-     
-     }
-     public void checkBetween(MyLabel lbl){
-         int line = 0;
-         int column = 0;
-         int nextLine = 0;
-         int nextColumn = 0;
-         
-         //get my label indexes
-         for(int i = 0; i<8; i++){
-             for(int j = 0; j<8; j++){
-                 if(lbls[i][j] == lbl){
-                     line = i;
-                     column = j;
-                 }
-             }
-         }
-         
-            //reverse lines to other player
-             for(int j = 0; j<8; j++){
-                 if(lbls[line][j].getContent() == lbl.getContent() && lbls[line][j] != lbl){
-                     if( column > j){
-                           for(int b = j+1; b < column; b++){
-                               game.getLabel(line, b).setContent(lbl.getContent());
-                               game.getPlayer(switchContent(lbl.getContent())).removeJeton(lbls[line][b]);
-                               game.getPlayer(lbl.getContent()).addJetons(lbls[line][b]);
-                               drawJeton(lbls[line][b], switchContent(lbl.getContent()));
-                           }
-                    }
-                     if( column < j ){
-                           for(int b = column+1; b < j; b++){
-                               game.getLabel(line,b).setContent(lbl.getContent());
-                               game.getPlayer(switchContent(lbl.getContent())).removeJeton(lbls[line][b]);
-                               game.getPlayer(lbl.getContent()).addJetons(lbls[line][b]);
-                               drawJeton(lbls[line][b], switchContent(lbl.getContent()));
-                           }
-                    }
-                     
-                 }
-             }
-             //reverse columns to other player
-             for(int i = 0; i<8; i++){
-                 if(lbls[i][column].getContent() == lbl.getContent() && lbls[i][column] != lbl){
-                     if( line > i){
-                           for(int b = i+1; b < column; b++){
-                               game.getLabel(b,column).setContent(lbl.getContent());
-                               game.getPlayer(switchContent(lbl.getContent())).removeJeton(lbls[b][column]);
-                               game.getPlayer(lbl.getContent()).addJetons(lbls[b][column]);
-                               drawJeton(lbls[b][column], switchContent(lbl.getContent()));
-                           }
-                    }
-                     if( line < i ){
-                           for(int b = line+1; b < i; b++){
-                               game.getLabel(b,column).setContent(lbl.getContent());
-                               game.getPlayer(switchContent(lbl.getContent())).removeJeton(lbls[b][column]);
-                               game.getPlayer(lbl.getContent()).addJetons(lbls[b][column]);
-                               drawJeton(lbls[b][column], switchContent(lbl.getContent()));
-                           }
-                    }
-                     
-                 }
-             }
-             
-             //Reverse diagonale to other player
-             //Calcul distance entre diag et position de label
-                int dist = 0;
 
-                //To localize the diagonal.column for each row
-                int diagonal = 0;
+    }
 
-                for(int lineDia = 0; lineDia<8 ; lineDia++)
-                    for(int columnDia = 0; columnDia<8 ; columnDia++){
-                        if(lineDia == columnDia) diagonal = columnDia;
-                        if(lbls[lineDia][columnDia] == lbl && columnDia>lineDia)
-                            dist = columnDia - diagonal;
-                        if(lbls[lineDia][columnDia] == lbl && columnDia<lineDia)
-                            dist = diagonal - columnDia;
-                    }   
+    public void checkBetween(MyLabel lbl) {
+        int line = 0;
+        int column = 0;
+        int nextLine = 0;
+        int nextColumn = 0;
 
-                //Get next position
-                for(int lineDia = 0; lineDia<8 ; lineDia++)
-                    for(int columnDia = 0; columnDia<8 ; columnDia++){
-                        if(lineDia == columnDia && columnDia>lineDia && (columnDia+dist < 8) )
-                        {System.out.println("************************************ haut");
-                            if(lbls[lineDia][columnDia+dist].getContent() != 0 && lbls[lineDia][columnDia+dist]!=lbl)
-                            {
-                              
-                                nextColumn = columnDia;
-                                nextLine = lineDia;  System.out.println(" nextLine "+nextLine+" nextColumn "+ nextColumn);
-                            }
-                        }
-                        if(lineDia == columnDia && columnDia <= lineDia && (columnDia-dist >= 0))
-                        {System.out.println("************************************ bas");
-                            if(lbls[lineDia][columnDia - dist].getContent() != 0 && lbls[lineDia][columnDia - dist]!=lbl)
-                            {
-                               
-                                nextColumn = columnDia;
-                                nextLine = lineDia;  System.out.println(" nextLine "+nextLine+" nextColumn "+ nextColumn);
-                            }
-                        }
-                    }
-                if(nextColumn < column)
-                {
-                    System.out.println(" nextLine "+nextLine+" line "+ line);
-                    for(int i = 0 ; i<8 ; i++)
-                    {
-                        for(int j = nextColumn + 1 ; j < column; j++)
-                        {
-                            if(i < j && (j + dist < 8))
-                            {
-                                game.getLabel(i,j+dist).setContent(lbl.getContent());
-                                System.out.println(" j+dist "+(j+dist)+" i "+ i);
-                                game.getPlayer(switchContent(lbl.getContent())).removeJeton(lbls[i][j+dist]);
-                                game.getPlayer(lbl.getContent()).addJetons(lbls[i][j+dist]);
-                                drawJeton(lbls[i][j+dist], switchContent(lbl.getContent()));
-                            }
-                             if(i >= j && (j - dist >=0))
-                            {
-                                game.getLabel(i ,j- dist).setContent(lbl.getContent());
-                                System.out.println(" i "+i+" j- dist "+ (j- dist));
-                                game.getPlayer(switchContent(lbl.getContent())).removeJeton(lbls[i][j-dist]);
-                                game.getPlayer(lbl.getContent()).addJetons(lbls[i][j-dist]);
-                                drawJeton(lbls[i][j-dist], switchContent(lbl.getContent()));
-                            }
-                        }
-                    }
-                }else
-                {
-                    System.out.println(" nextLine "+nextLine+" line "+ line);
-                     for(int i = 0 ; i<8 ; i++)
-                    {
-                        for(int j = column +1 ; j < nextColumn ; j++)
-                        {
-                            if(i < j && (j + dist < 8))
-                            {
-                                game.getLabel(i,j+dist).setContent(lbl.getContent());
-                                System.out.println(" i "+i+" (j+dist) "+ (j+dist));
-                                game.getPlayer(switchContent(lbl.getContent())).removeJeton(lbls[i][j+dist]);
-                                game.getPlayer(lbl.getContent()).addJetons(lbls[i][j+dist]);
-                                drawJeton(lbls[i][j+dist], switchContent(lbl.getContent()));
-                            }
-                             if(i >= j && (j - dist >= 0))
-                            {
-                                game.getLabel(i ,j- dist).setContent(lbl.getContent());
-                                System.out.println(" i "+i+" j+dist "+ (j+dist));
-                                game.getPlayer(switchContent(lbl.getContent())).removeJeton(lbls[i][j-dist]);
-                                game.getPlayer(lbl.getContent()).addJetons(lbls[i][j-dist]);
-                                drawJeton(lbls[i][j-dist], switchContent(lbl.getContent()));
-                            }
-                        }
+        //get my label indexes
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (game.getLabel(i, j) == lbl) {
+                    line = i;
+                    column = j;
+                }
+            }
+        }
+
+        //reverse lines to other player
+        for (int j = 0; j < 8; j++) {
+            if (game.getLabel(line, j).getContent() == lbl.getContent() && game.getLabel(line, j) != lbl) {
+                System.out.println("***********************");
+                if (column > j) {
+                    for (int b = j + 1; b < column; b++) {
+                        game.getLabel(line, b).setContent(lbl.getContent());
+                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(line, b));
+                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(line, b));
+                        drawJeton(game.getLabel(line, b), lbl.getContent());
                     }
                 }
-                    
-             game.setLbels(lbls);
-     }
-     
-     public int switchContent(int content){
-         if(content == 1)
-             return 2;
-         return 1;
-     }
-     
-     public void drawJeton(MyLabel lbl, int content){
-         if(content == 1)
-             lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
-         else if(content == 2)
-             lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
-     }
-     
-     public void setUser(String username)
-    {
-       user.setText(username);
+                if (column < j) {
+                    for (int b = column + 1; b < j; b++) {
+                        game.getLabel(line, b).setContent(lbl.getContent());
+                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(line, b));
+                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(line, b));
+                        drawJeton(game.getLabel(line, b), lbl.getContent());
+                    }
+                }
+
+            }
+        }
+        //reverse columns to other player
+        for (int i = 0; i < 8; i++) {
+            if (game.getLabel(i, column).getContent() == lbl.getContent() && game.getLabel(i, column) != lbl) {
+                System.out.println("***********************");
+                if (line > i) {
+                    for (int b = i + 1; b < line; b++) {
+                        game.getLabel(b, column).setContent(lbl.getContent());
+                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(b, column));
+                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(b, column));
+                        drawJeton(game.getLabel(b, column), lbl.getContent());
+                    }
+                }
+                if (line < i) {
+                    for (int b = line + 1; b < i; b++) {
+                        game.getLabel(b, column).setContent(lbl.getContent());
+                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(b, column));
+                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(b, column));
+                        drawJeton(game.getLabel(b, column), lbl.getContent());
+                    }
+                }
+
+            }
+        }
+//             
+//             //Reverse diagonale to other player
+//             //Calcul distance entre diag et position de label
+//                int dist = 0;
+//
+//                //To localize the diagonal.column for each row
+//                int diagonal = 0;
+//
+//                for(int lineDia = 0; lineDia<8 ; lineDia++)
+//                    for(int columnDia = 0; columnDia<8 ; columnDia++){
+//                        if(lineDia == columnDia) diagonal = columnDia;
+//                        if(lbls[lineDia][columnDia] == lbl && columnDia>lineDia)
+//                            dist = columnDia - diagonal;
+//                        if(lbls[lineDia][columnDia] == lbl && columnDia<lineDia)
+//                            dist = diagonal - columnDia;
+//                    }   
+//
+//                //Get next position
+//                for(int lineDia = 0; lineDia<8 ; lineDia++)
+//                    for(int columnDia = 0; columnDia<8 ; columnDia++){
+//                        if(lineDia == columnDia && columnDia>lineDia && (columnDia+dist < 8) )
+//                        {System.out.println("************************************ haut");
+//                            if(lbls[lineDia][columnDia+dist].getContent() != 0 && lbls[lineDia][columnDia+dist]!=lbl)
+//                            {
+//                              
+//                                nextColumn = columnDia;
+//                                nextLine = lineDia;  System.out.println(" nextLine "+nextLine+" nextColumn "+ nextColumn);
+//                            }
+//                        }
+//                        if(lineDia == columnDia && columnDia <= lineDia && (columnDia-dist >= 0))
+//                        {System.out.println("************************************ bas");
+//                            if(lbls[lineDia][columnDia - dist].getContent() != 0 && lbls[lineDia][columnDia - dist]!=lbl)
+//                            {
+//                               
+//                                nextColumn = columnDia;
+//                                nextLine = lineDia;  System.out.println(" nextLine "+nextLine+" nextColumn "+ nextColumn);
+//                            }
+//                        }
+//                    }
+//                if(nextColumn < column)
+//                {
+//                    System.out.println(" nextLine "+nextLine+" line "+ line);
+//                    for(int i = 0 ; i<8 ; i++)
+//                    {
+//                        for(int j = nextColumn + 1 ; j < column; j++)
+//                        {
+//                            if(i < j && (j + dist < 8))
+//                            {
+//                                game.getLabel(i,j+dist).setContent(lbl.getContent());
+//                                System.out.println(" j+dist "+(j+dist)+" i "+ i);
+//                                game.getPlayer(switchContent(lbl.getContent())).removeJeton(lbls[i][j+dist]);
+//                                game.getPlayer(lbl.getContent()).addJetons(lbls[i][j+dist]);
+//                                drawJeton(lbls[i][j+dist], switchContent(lbl.getContent()));
+//                            }
+//                             if(i >= j && (j - dist >=0))
+//                            {
+//                                game.getLabel(i ,j- dist).setContent(lbl.getContent());
+//                                System.out.println(" i "+i+" j- dist "+ (j- dist));
+//                                game.getPlayer(switchContent(lbl.getContent())).removeJeton(lbls[i][j-dist]);
+//                                game.getPlayer(lbl.getContent()).addJetons(lbls[i][j-dist]);
+//                                drawJeton(lbls[i][j-dist], switchContent(lbl.getContent()));
+//                            }
+//                        }
+//                    }
+//                }else
+//                {
+//                    System.out.println(" nextLine "+nextLine+" line "+ line);
+//                     for(int i = 0 ; i<8 ; i++)
+//                    {
+//                        for(int j = column +1 ; j < nextColumn ; j++)
+//                        {
+//                            if(i < j && (j + dist < 8))
+//                            {
+//                                game.getLabel(i,j+dist).setContent(lbl.getContent());
+//                                System.out.println(" i "+i+" (j+dist) "+ (j+dist));
+//                                game.getPlayer(switchContent(lbl.getContent())).removeJeton(lbls[i][j+dist]);
+//                                game.getPlayer(lbl.getContent()).addJetons(lbls[i][j+dist]);
+//                                drawJeton(lbls[i][j+dist], switchContent(lbl.getContent()));
+//                            }
+//                             if(i >= j && (j - dist >= 0))
+//                            {
+//                                game.getLabel(i ,j- dist).setContent(lbl.getContent());
+//                                System.out.println(" i "+i+" j+dist "+ (j+dist));
+//                                game.getPlayer(switchContent(lbl.getContent())).removeJeton(lbls[i][j-dist]);
+//                                game.getPlayer(lbl.getContent()).addJetons(lbls[i][j-dist]);
+//                                drawJeton(lbls[i][j-dist], switchContent(lbl.getContent()));
+//                            }
+//                        }
+//                    }
+//                }
+//                
+        
     }
-     
-     public void setDisconnectButton(String s)
-    {
-       disconnect.setText(s);
+
+    public int switchContent(int content) {
+        if (content == 1) {
+            return 2;
+        } else {
+            return 1;
+        }
     }
-     
+
+    public void drawJeton(MyLabel lbl, int content) {
+        if (content == 2) {
+            lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
+        } else if (content == 1) {
+            lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
+        }
+    }
+
+    public void setUser(String username) {
+        user.setText(username);
+    }
+
+    public void setDisconnectButton(String s) {
+        disconnect.setText(s);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -681,18 +693,17 @@ private void trace(int playerContent)
         Point pos = new Point();
         pos.setLocation(evt.getPoint());
         MyLabel ana = (MyLabel) panel.getComponentAt(pos);
-        if(ana.isEnabled() == true)
+        if (ana.isEnabled() == true) {
             play(pos);
-       
+        }
+
         //show matrix in console
-         for(int i=0 ; i<8 ; i++)
-         {
-             System.out.println(" ");
-             for(int j = 0 ; j<8 ; j++)
-             {
-                 System.out.print(" "+lbls[i][j].getContent()+" ");
-             }
-         }
+        for (int i = 0; i < 8; i++) {
+            System.out.println(" ");
+            for (int j = 0; j < 8; j++) {
+                System.out.print(" " + game.getLabel(i, j).getContent() + " ");
+            }
+        }
     }//GEN-LAST:event_panelMouseClicked
 
     private void disconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disconnectActionPerformed
@@ -726,28 +737,24 @@ private void trace(int playerContent)
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                
 
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(OthelloInterface.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (InstantiationException ex) {
+        } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(OthelloInterface.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(OthelloInterface.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(OthelloInterface.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

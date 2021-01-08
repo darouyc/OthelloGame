@@ -6,8 +6,12 @@
 package game;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
 
 /**
  *
@@ -19,12 +23,40 @@ import javax.swing.JLabel;
         Player player2;
         MyLabel [][] lbls;
     
-    public Game( MyLabel [][] lbls )
+    public Game(JPanel panel)
     {
-       this.lbls = lbls;
+       this.lbls = new MyLabel[8][8];
        jetons = new ArrayList();
        this.player1 = new Player();
-       this.player2 = new Player();
+       this.player2 = new Player(); 
+       
+       for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                MyLabel lbl = new MyLabel(new JLabel(" "), i, j);
+                lbl.setPreferredSize(new java.awt.Dimension(50, 50));
+                lbl.setBackground(new Color(40, 100, 28));
+                lbl.setBorder(new BevelBorder(BevelBorder.LOWERED));
+                lbl.setText("i" + i + "j" + j );
+                lbl.setEnabled(false);
+                panel.add(lbl);
+
+               
+                // initial stat  
+                if (i == 3 && j == 4 || i == 4 && j == 3) {
+                    lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
+                    lbl.setContent(2);
+                    player1.addJetons(lbl);
+                }
+                if (i == 3 && j == 3 || i == 4 && j == 4) {
+                    
+                    lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
+                    lbl.setContent(1);
+                    player2.addJetons(lbl);
+                }
+                lbls[i][j] = lbl;
+            }
+       }
+                
     }
     
     public void concatArrays()
@@ -34,9 +66,10 @@ import javax.swing.JLabel;
         jetons.addAll(player2.getJetons());
     }
     
-    public boolean verifyPosition(JLabel lbl)
+    public boolean verifyPosition(MyLabel lbl)
     {
-        if(jetons.contains(lbl))
+        concatArrays();
+        if(lbl.getContent() == 1 || lbl.getContent() == 2)
             return false;
         return true;
     }
@@ -49,11 +82,11 @@ import javax.swing.JLabel;
     {
         return player2;
     }
-    public void setLbels( MyLabel[][] lbls)
-    {
-        this.lbls = lbls;
-        //lbls[1][1].setBackground(Color.red);
-    }
+//    public void setLbels( MyLabel[][] lbls)
+//    {
+//        this.lbls = lbls;
+//        //lbls[1][1].setBackground(Color.red);
+//    }
     public ArrayList<MyLabel> getJetons()
     {
         return this.jetons;
@@ -79,5 +112,35 @@ import javax.swing.JLabel;
         return lbls[i][j];
         
     }
-    
+//    public void setLabel(int i, int j)
+//    {
+//        lbls[i][j]
+//    
+    public void displayJetons()
+    {
+        System.out.println(" player1 ");
+        for(MyLabel lbl: getPlayer1().jetons)
+        {
+//            for(int i=0;i<8;i++ )
+//                for(int j=0;j<8;j++ )
+//                {
+                   // if(lbl.getLocation() == lbls[i][j].getLocation())
+                        System.out.print(" content "+lbl.getContent());
+ //               }
+            
+        }
+        
+        System.out.println(" player2 ");
+        
+        for(MyLabel lbl: getPlayer2().jetons)
+        {
+//            for(int i=0;i<8;i++ )
+//                for(int j=0;j<8;j++ )
+//                {
+                   // if(lbl.getLocation() == lbls[i][j].getLocation())
+                        System.out.print(" content "+lbl.getContent());
+  //              }
+            
+        }
+    }
 }

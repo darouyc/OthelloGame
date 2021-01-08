@@ -7,6 +7,7 @@ package game;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -37,6 +38,28 @@ public class Player {
         return this.jetons;
     }
     public void removeJeton(MyLabel lbl){
-        jetons.remove(lbl);
+       
+        Iterator itr = jetons.iterator(); 
+        while (itr.hasNext()) 
+        { 
+            MyLabel l = (MyLabel)itr.next(); 
+            
+            if(lbl.getLine() == l.getLine() && lbl.getColumn() == lbl.getColumn())
+            {
+                System.out.println("score before"+jetons.size());
+                jetons.remove(l);
+                System.out.println("score after"+jetons.size());
+                break;
+            }
+        } 
+  
+       
     }
+//    public void displayJetons()
+//    {
+//        for(MyLabel lbl: jetons)
+//        {
+//            System.out.print(" i "+i+" j "+j+"");
+//        }
+//    }
 }

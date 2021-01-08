@@ -13,13 +13,17 @@ import javax.swing.JLabel;
  */
 public class MyLabel extends JLabel{
     
-    
+   JLabel lbl ;
    int content = 0;
+   int line = 0;
+   int column = 0;
    
-   public MyLabel()
+   public MyLabel(JLabel lbl, int line, int column)
    {
     super();
-            
+    this.lbl =  lbl;
+    this.line = line;
+    this.column = column;
    }
    
     public MyLabel(String str)
@@ -35,5 +39,15 @@ public class MyLabel extends JLabel{
    public void setContent(int content)
    {
        this.content = content;
+   }
+   
+   public int getLine()
+   {
+       return line;
+   }
+   
+   public int getColumn()
+   {
+       return column;
    }
 }
