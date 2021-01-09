@@ -23,11 +23,13 @@ public class OthelloInterface extends javax.swing.JFrame {
      * Creates new form OthelloInterface
      */
     Game game;
-
+    
+    // change round for players
     boolean tour = false;
-    // MyLabel[][] lbls = new MyLabel[8][8];
-
+    
     public OthelloInterface() {
+         
+        //display interface
         initComponents();
         setLocationRelativeTo(null);
         initial();
@@ -55,7 +57,11 @@ public class OthelloInterface extends javax.swing.JFrame {
     }
 
     public void first() {
+        
+        //get possibilities to first player
         trace(1);
+        
+        //change background for 4 first tokens
         game.getLabel(3, 4).setBackground(new Color(40, 100, 28));
         game.getLabel(3, 4).setEnabled(true);
         game.getLabel(4, 3).setBackground(new Color(40, 100, 28));
@@ -65,9 +71,11 @@ public class OthelloInterface extends javax.swing.JFrame {
         game.getLabel(4, 4).setBackground(new Color(40, 100, 28));
         game.getLabel(4, 4).setEnabled(true);
     }
-
+    
+    
     public void play(Point pos) {
 
+        
         changePlayer();
 
         //get selected label
@@ -86,10 +94,10 @@ public class OthelloInterface extends javax.swing.JFrame {
 
                 System.out.println("-----------done----------");
 
-                //add Jeton to player array 
-                //game.getPlayer1().addJetons(label);
+                //change state get won tokens and change it 
                 checkBetween(label);
                 game.displayJetons();
+                
                 //Disable All labels
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
@@ -105,7 +113,9 @@ public class OthelloInterface extends javax.swing.JFrame {
                 //change player
                 tour = false;
                 label.setBackground(new Color(40, 100, 28));
-            } //player 2 
+            } 
+            
+            //player 2 
             else {
                 //add black icon
                 label.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
@@ -114,9 +124,8 @@ public class OthelloInterface extends javax.swing.JFrame {
                 changeStat(label);
 
                 System.out.println("-----------done----------");
-
-                //add Jeton to player array
-                //game.getPlayer2().addJetons(label);
+                
+                //change state get won tokens and change it 
                 checkBetween(label);
                 game.displayJetons();
 
@@ -153,52 +162,62 @@ public class OthelloInterface extends javax.swing.JFrame {
         lblScoreWhite.setText(" " + game.getPlayer1().getScore());
 
     }
-
+    
+    // get possibilities to player
     private void trace(int playerContent) {
-//        boolean win= true;
+        
         try {
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
-                    //get used postion with content 
+                    //get used position with content 
                     if (game.getLabel(i, j).getContent() == playerContent) {
                         if (verifyColumn(j, game.getLabel(i, j))) {
                             //Column
+                            
+                            //high
                             if (game.verifyPosition(game.getLabel(i + 1, j))) {
                                 game.getLabel(i + 1, j).setBackground(Color.red);
                                 game.getLabel(i + 1, j).setEnabled(true);
-//                                win = false;
+
                             }
+                            //bottom
                             if (game.verifyPosition(game.getLabel(i - 1, j))) {
                                 game.getLabel(i - 1, j).setBackground(Color.red);
                                 game.getLabel(i - 1, j).setEnabled(true);
                             }
                         }
-                        //Ligne
+                        //Line
+                        //Right
                         if (verifyLine(i, game.getLabel(i, j))) {
                             if (game.verifyPosition(game.getLabel(i, j + 1))) {
                                 game.getLabel(i, j + 1).setBackground(Color.red);
                                 game.getLabel(i, j + 1).setEnabled(true);
                             }
+                            //Left
                             if (game.verifyPosition(game.getLabel(i, j - 1))) {
                                 game.getLabel(i, j - 1).setBackground(Color.red);
                                 game.getLabel(i, j - 1).setEnabled(true);
                             }
                         }
 
-//                            Diagonal
+                        //Diagonal
                         if (verifyDiagonal(j, game.getLabel(i, j))) {
+                            // right && high 
                             if (game.verifyPosition(game.getLabel(i + 1, j + 1)) && game.getLabel(i - 1, j - 1).getContent() == switchContent(playerContent)) {
                                 game.getLabel(i + 1, j + 1).setBackground(Color.red);
                                 game.getLabel(i + 1, j + 1).setEnabled(true);
                             }
+                            //Left && buttom
                             if (game.verifyPosition(game.getLabel(i - 1, j - 1)) && game.getLabel(i + 1, j + 1).getContent() == switchContent(playerContent)) {
                                 game.getLabel(i - 1, j - 1).setBackground(Color.red);
                                 game.getLabel(i - 1, j - 1).setEnabled(true);
                             }
+                            //Left && high
                             if (game.verifyPosition(game.getLabel(i - 1, j + 1)) && game.getLabel(i + 1, j - 1).getContent() == switchContent(playerContent)) {
                                 game.getLabel(i - 1, j + 1).setBackground(Color.red);
                                 game.getLabel(i - 1, j + 1).setEnabled(true);
                             }
+                            //right && bottom
                             if (game.verifyPosition(game.getLabel(i + 1, j - 1)) && game.getLabel(i - 1, j + 1).getContent() == switchContent(playerContent)) {
                                 game.getLabel(i + 1, j - 1).setBackground(Color.red);
                                 game.getLabel(i + 1, j - 1).setEnabled(true);
@@ -214,18 +233,17 @@ public class OthelloInterface extends javax.swing.JFrame {
 
     }
 
-    //line
+    // verify if there is 2 tokens with different color in same line
     public boolean verifyLine(int line, MyLabel lbl) {
         for (int column = 0; column < 8; column++) {
             if (game.getLabel(line, column).getContent() == switchContent(lbl.getContent()) && game.getLabel(line, column) != lbl) {
-                System.out.println("switch = " + lbl.getContent());
                 return true;
             }
         }
         return false;
     }
 
-    //column 
+    // verify if there is 2 tokens with different color in same column
     public boolean verifyColumn(int column, MyLabel lbl) {
         for (int line = 0; line < 8; line++) {
             if (game.getLabel(line, column).getContent() == switchContent(lbl.getContent()) && game.getLabel(line, column) != lbl) {
@@ -234,8 +252,8 @@ public class OthelloInterface extends javax.swing.JFrame {
         }
         return false;
     }
-    //diagonale
-
+   
+    // verify if there is 2 tokens with different color in same diagonal
     public boolean verifyDiagonal(int j, MyLabel lbl) {
         //Calcul distance entre diag et position de label
         int dist = 0;
@@ -261,13 +279,11 @@ public class OthelloInterface extends javax.swing.JFrame {
             for (int column = 0; column < 8; column++) {
                 if (column > line && (column + dist < 8)) {
                     if (game.getLabel(line, column + dist).getContent() == switchContent(lbl.getContent())) {
-//                    if (game.getLabel(line, column + dist).getContent() == lbl.getContent() ) {
                         return true;
                     }
                 }
                 if (column <= line && (column - dist >= 0)) {
                     if (game.getLabel(line, column - dist).getContent() == switchContent(lbl.getContent())) {
-//                    if (game.getLabel(line, column - dist).getContent() == lbl.getContent() ) {
                         return true;
                     }
                 }
@@ -294,7 +310,8 @@ public class OthelloInterface extends javax.swing.JFrame {
 
         return false;
     }
-
+    
+    // switch players change background inside panel
     public void changePlayer() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -311,6 +328,8 @@ public class OthelloInterface extends javax.swing.JFrame {
                     System.out.println("change stat");
                     game.getLabel(i, j).setContent(pos.getContent());
                     game.getLabel(i, j).setBackground(new Color(40, 100, 28));
+                   
+                    //add token to player
                     if (pos.getContent() == 1) {
                         game.getPlayer1().addJetons(game.getLabel(i, j));
                     }
@@ -318,48 +337,41 @@ public class OthelloInterface extends javax.swing.JFrame {
                     if (pos.getContent() == 2) {
                         game.getPlayer2().addJetons(game.getLabel(i, j));
                     }
-                    //game.setLbels(lbls);
                 }
             }
         }
 
     }
-
+    
+    
+   //switch tokens  
     public void checkBetween(MyLabel lbl) {
-        int line = 0;
-        int column = 0;
+        
+        //initializ position by -1 -1
         int nextLine = -1;
         int nextColumn = -1;
 
-        //get my label indexes
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (game.getLabel(i, j) == lbl) {
-                    line = i;
-                    column = j;
-                    System.out.println(" i " + i + " j " + j);
-                }
-            }
-        }
-
         //reverse lines to other player
         for (int j = 0; j < 8; j++) {
-            if (game.getLabel(line, j).getContent() == lbl.getContent() && game.getLabel(line, j) != lbl) {
-                System.out.println("***********************");
-                if (column > j) {
-                    for (int b = j + 1; b < column; b++) {
-                        game.getLabel(line, b).setContent(lbl.getContent());
-                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(line, b));
-                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(line, b));
-                        drawJeton(game.getLabel(line, b), lbl.getContent());
+            
+            // get other token same color in line for the lbl (played by player) and different of lbl 
+            if (game.getLabel(lbl.getLine(), j).getContent() == lbl.getContent() && game.getLabel(lbl.getLine(), j) != lbl) {
+             
+                // get top column 
+                if (lbl.getColumn() > j) {
+                    for (int b = j + 1; b < lbl.getColumn(); b++) {
+                        game.getLabel(lbl.getLine(), b).setContent(lbl.getContent());
+                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(lbl.getLine(), b));
+                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(lbl.getLine(), b));
+                        drawJeton(game.getLabel(lbl.getLine(), b), lbl.getContent());
                     }
                 }
-                if (column <= j) {
-                    for (int b = column + 1; b < j; b++) {
-                        game.getLabel(line, b).setContent(lbl.getContent());
-                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(line, b));
-                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(line, b));
-                        drawJeton(game.getLabel(line, b), lbl.getContent());
+                if (lbl.getColumn() <= j) {
+                    for (int b = lbl.getColumn() + 1; b < j; b++) {
+                        game.getLabel(lbl.getLine(), b).setContent(lbl.getContent());
+                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(lbl.getLine(), b));
+                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(lbl.getLine(), b));
+                        drawJeton(game.getLabel(lbl.getLine(), b), lbl.getContent());
                     }
                 }
 
@@ -367,22 +379,25 @@ public class OthelloInterface extends javax.swing.JFrame {
         }
         //reverse columns to other player
         for (int i = 0; i < 8; i++) {
-            if (game.getLabel(i, column).getContent() == lbl.getContent() && game.getLabel(i, column) != lbl) {
-                System.out.println("***********************");
-                if (line > i) {
-                    for (int b = i + 1; b < line; b++) {
-                        game.getLabel(b, column).setContent(lbl.getContent());
-                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(b, column));
-                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(b, column));
-                        drawJeton(game.getLabel(b, column), lbl.getContent());
+            
+            // get other token same color in column for the lbl (played by player) and different of lbl 
+            if (game.getLabel(i, lbl.getColumn()).getContent() == lbl.getContent() && game.getLabel(i, lbl.getColumn()) != lbl) {
+                
+                //get left token
+                if (lbl.getLine() > i) {
+                    for (int b = i + 1; b < lbl.getLine(); b++) {
+                        game.getLabel(b, lbl.getColumn()).setContent(lbl.getContent());
+                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(b, lbl.getColumn()));
+                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(b, lbl.getColumn()));
+                        drawJeton(game.getLabel(b, lbl.getColumn()), lbl.getContent());
                     }
                 }
-                if (line <= i) {
-                    for (int b = line + 1; b < i; b++) {
-                        game.getLabel(b, column).setContent(lbl.getContent());
-                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(b, column));
-                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(b, column));
-                        drawJeton(game.getLabel(b, column), lbl.getContent());
+                if (lbl.getLine() <= i) {
+                    for (int b = lbl.getLine() + 1; b < i; b++) {
+                        game.getLabel(b, lbl.getColumn()).setContent(lbl.getContent());
+                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(b, lbl.getColumn()));
+                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(b, lbl.getColumn()));
+                        drawJeton(game.getLabel(b, lbl.getColumn()), lbl.getContent());
                     }
                 }
 
@@ -414,7 +429,7 @@ public class OthelloInterface extends javax.swing.JFrame {
         //Get next position
         for (int lineDia = 0; lineDia < 8 && nextLine == -1; lineDia++) {
             for (int columnDia = 0; columnDia < 8 && nextColumn == -1; columnDia++) {
-                if (column > line && (columnDia + dist < 8)) {
+                if (lbl.getColumn() > lbl.getLine() && (columnDia + dist < 8)) {
                     if (game.getLabel(lineDia, columnDia + dist).getContent() == lbl.getContent() && game.getLabel(lineDia, columnDia + dist) != lbl) {
                         nextColumn = columnDia + dist;
                         nextLine = lineDia;
@@ -422,7 +437,7 @@ public class OthelloInterface extends javax.swing.JFrame {
                         break;
                     }
                 }
-                if (column <= line && (columnDia - dist >= 0)) {
+                if (lbl.getColumn() <= lbl.getLine() && (columnDia - dist >= 0)) {
                     if (game.getLabel(lineDia, columnDia - dist).getContent() == lbl.getContent() && game.getLabel(lineDia, columnDia - dist) != lbl) {
 
                         nextColumn = columnDia - dist;
@@ -460,9 +475,9 @@ public class OthelloInterface extends javax.swing.JFrame {
 //            }
 //        }
 //
-        if (nextColumn < column && nextLine < line) {
-            System.out.println(" 1************88column " + column + " line " + line);
-            for (int i = nextLine + 1, j = nextColumn + 1; i < line && j < column; i++, j++) {
+        if (nextColumn < lbl.getColumn() && nextLine < lbl.getLine()) {
+            System.out.println(" 1************88column " + lbl.getColumn() + " line " + lbl.getLine());
+            for (int i = nextLine + 1, j = nextColumn + 1; i < lbl.getLine() && j < lbl.getColumn(); i++, j++) {
                 {
 
                     if (i < j && (j + dist < 8)) {
@@ -484,9 +499,9 @@ public class OthelloInterface extends javax.swing.JFrame {
                 }
             }
         }
-        if (nextColumn > column && nextLine < line) {
-            System.out.println(" 2 **************8line " + line + " column " + column);
-            for (int i = nextLine + 1, j = column + 1; j < nextColumn && i < line; i++, j++) {
+        if (nextColumn > lbl.getColumn() && nextLine < lbl.getLine()) {
+            System.out.println(" 2 **************8line " + lbl.getLine() + " column " + lbl.getColumn());
+            for (int i = nextLine + 1, j = lbl.getColumn() + 1; j < nextColumn && i < lbl.getLine(); i++, j++) {
 
                 {
                     System.out.println("**********************///////////////////////////////// ");
@@ -509,9 +524,9 @@ public class OthelloInterface extends javax.swing.JFrame {
                 }
             }
         }
-        if (nextColumn < column && nextLine >= line) {
-            System.out.println(" 3***************line " + line + " column " + column);
-            for (int i = line + 1, j = nextColumn + 1; i < nextLine && j < column; i++, j++) {
+        if (nextColumn < lbl.getColumn() && nextLine >= lbl.getLine()) {
+            System.out.println(" 3***************line " + lbl.getLine() + " column " + lbl.getColumn());
+            for (int i = lbl.getLine() + 1, j = nextColumn + 1; i < nextLine && j < lbl.getColumn(); i++, j++) {
                 {
                     System.out.println("**********************///////////////////////////////// ");
                     if (i < j && (j + dist < 8)) {
@@ -531,9 +546,9 @@ public class OthelloInterface extends javax.swing.JFrame {
                 }
             }
         }
-        if (nextColumn >= column && nextLine >= line) {
-            System.out.println(" 4***************line " + column + " column " + column);
-            for (int i = line + 1, j = column + 1; i < nextLine && j < nextColumn; i++, j++) {
+        if (nextColumn >= lbl.getColumn() && nextLine >= lbl.getLine()) {
+            System.out.println(" 4***************line " + lbl.getColumn() + " column " + lbl.getColumn());
+            for (int i = lbl.getLine() + 1, j = lbl.getColumn() + 1; i < nextLine && j < nextColumn; i++, j++) {
                 {
                     System.out.println("**********************///////////////////////////////// ");
                     if (i < j && (j + dist < 8)) {
