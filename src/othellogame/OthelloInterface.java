@@ -43,7 +43,11 @@ public class OthelloInterface extends javax.swing.JFrame {
     public OthelloInterface() {
         initComponents();
         setLocationRelativeTo(null);
-
+        initial();
+    }
+    
+    //Initilize the panel
+    public void initial(){
         //create grille 
         GridLayout grdlyt = new GridLayout(8, 8);
 
@@ -258,9 +262,7 @@ public class OthelloInterface extends javax.swing.JFrame {
         //To calculate distance based on normal diagonal
         for (int line = 0; line < 8; line++) {
             for (int column = 0; column < 8; column++) {
-//                if (line == column) {
-//                    diagonal = column;
-//                }
+
                 if (game.getLabel(line, column) == lbl && lbl.getColumn() > line) {
                     dist = lbl.getColumn() - line;
                 }
@@ -403,7 +405,7 @@ public class OthelloInterface extends javax.swing.JFrame {
 
             }
         }
-//             
+             
 //             //Reverse diagonale to other player
 //             //Calcul distance entre diag et position de label
 //                int dist = 0;
@@ -418,6 +420,7 @@ public class OthelloInterface extends javax.swing.JFrame {
 //                            dist = columnDia - diagonal;
 //                        if(game.getLabel(lineDia, columnDia) == lbl && columnDia<lineDia)
 //                            dist = diagonal - columnDia;
+//                            System.out.println("Distance is:" + dist);
 //                    }   
 //
 //                //Get next position
@@ -427,7 +430,6 @@ public class OthelloInterface extends javax.swing.JFrame {
 //                        {
 //                            if(game.getLabel(lineDia, columnDia+dist).getContent() == lbl.getContent() && game.getLabel(lineDia, columnDia+dist)!= lbl)
 //                            {
-//                              
 //                                nextColumn = columnDia;
 //                                nextLine = lineDia;  
 //                                System.out.println(" nextLine "+nextLine+" nextColumn "+ nextColumn);
@@ -444,6 +446,29 @@ public class OthelloInterface extends javax.swing.JFrame {
 //                            }
 //                        }
 //                    }
+////                for(int lineDia = 0; lineDia<8 ; lineDia++)
+////                    for(int columnDia = 7; columnDia > 0 ; columnDia--){
+////                        if(columnDia>lineDia && (columnDia-dist > 8) )
+////                        {
+////                            if(game.getLabel(lineDia, columnDia-dist).getContent() == lbl.getContent() && game.getLabel(lineDia, columnDia-dist)!= lbl)
+////                            {
+////                                nextColumn = columnDia;
+////                                nextLine = lineDia;  
+////                                System.out.println(" nextLine "+nextLine+" nextColumn "+ nextColumn);
+////                            }
+////                        }
+////                        if(columnDia <= lineDia && (columnDia + dist < 8))
+////                        {
+////                            if(game.getLabel(lineDia, columnDia + dist).getContent() == lbl.getContent() && game.getLabel(lineDia, columnDia + dist)!=lbl)
+////                            {
+////                               
+////                                nextColumn = columnDia;
+////                                nextLine = lineDia;  
+////                                System.out.println(" nextLine "+nextLine+" nextColumn "+ nextColumn);
+////                            }
+////                        }
+////                    }
+//
 //                if(nextColumn < column && nextLine< line)
 //                {
 //                    System.out.println(" nextLine "+nextLine+" line "+ line);
@@ -774,7 +799,8 @@ public class OthelloInterface extends javax.swing.JFrame {
 
     private void newGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGameActionPerformed
         // TODO add your handling code here:
-        panel.repaint();
+        panel.removeAll();
+        initial();
     }//GEN-LAST:event_newGameActionPerformed
 
     /**
