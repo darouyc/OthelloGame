@@ -426,7 +426,7 @@ public class OthelloInterface extends javax.swing.JFrame {
             }
         }
 
-        //Get next position
+        //Get next position 
         for (int lineDia = 0; lineDia < 8 && nextLine == -1; lineDia++) {
             for (int columnDia = 0; columnDia < 8 && nextColumn == -1; columnDia++) {
                 if (lbl.getColumn() > lbl.getLine() && (columnDia + dist < 8)) {
@@ -570,7 +570,8 @@ public class OthelloInterface extends javax.swing.JFrame {
         }
 
     }
-
+    
+    // change value of content
     public int switchContent(int content) {
         if (content == 1) {
             return 2;
@@ -579,7 +580,8 @@ public class OthelloInterface extends javax.swing.JFrame {
         }
         return 0;
     }
-
+    
+    // draw token 
     public void drawJeton(MyLabel lbl, int content) {
         if (content == 2) {
             lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
@@ -587,11 +589,13 @@ public class OthelloInterface extends javax.swing.JFrame {
             lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
         }
     }
-
+    
+    // display username inside interface
     public void setUser(String username) {
         user.setText(username);
     }
-
+    
+    //disconnect user
     public void setDisconnectButton(String s) {
         disconnect.setText(s);
     }
@@ -762,7 +766,11 @@ public class OthelloInterface extends javax.swing.JFrame {
     private void panelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelMouseClicked
         // TODO add your handling code here:
         Point pos = new Point();
+        
+        //get clicked position
         pos.setLocation(evt.getPoint());
+        
+        //get component by position
         MyLabel ana = (MyLabel) panel.getComponentAt(pos);
         if (ana.isEnabled() == true) {
             play(pos);
@@ -791,7 +799,9 @@ public class OthelloInterface extends javax.swing.JFrame {
 
     private void newGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGameActionPerformed
         // TODO add your handling code here:
+        //clean all parameters to start game
         panel.removeAll();
+        // initialz round
         tour = false;
         initial();
     }//GEN-LAST:event_newGameActionPerformed
