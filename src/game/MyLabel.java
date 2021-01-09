@@ -11,12 +11,14 @@ import javax.swing.JLabel;
  *
  * @author Hp EliteBook
  */
+ 
+// this class define label by content and its positions in matrix
 public class MyLabel extends JLabel{
     
-   JLabel lbl ;
-   int content = 0;
-   int line = 0;
-   int column = 0;
+   JLabel lbl ; 
+   int content = 0; // 0 => unused token 1=> used by player1 2=> used by player2
+   int line = 0; // line in matrix
+   int column = 0; //column in matrix
    
    public MyLabel(JLabel lbl, int line, int column)
    {

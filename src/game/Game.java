@@ -6,7 +6,6 @@
 package game;
 
 import java.awt.Color;
-import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -17,31 +16,39 @@ import javax.swing.border.BevelBorder;
  *
  * @author Hp EliteBook
  */
+ 
+   // this class save all transaction made in game 
     public class Game {
-        ArrayList<MyLabel> jetons;
+        ArrayList<MyLabel> jetons; //containt all tokens used by both players 
         Player player1;
         Player player2;
-        MyLabel [][] lbls;
+        MyLabel [][] lbls; // matrix of MyLabels
     
     public Game(JPanel panel)
     {
-       this.lbls = new MyLabel[8][8];
+       this.lbls = new MyLabel[8][8]; 
        jetons = new ArrayList();
        this.player1 = new Player();
        this.player2 = new Player(); 
        
        for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
+                
+                // create new MyLabel
                 MyLabel lbl = new MyLabel(new JLabel(" "), i, j);
+                // set disgn configurations 
                 lbl.setPreferredSize(new java.awt.Dimension(50, 50));
                 lbl.setBackground(new Color(40, 100, 28));
                 lbl.setBorder(new BevelBorder(BevelBorder.LOWERED));
-                lbl.setText("i" + i + "j" + j );
+ //               lbl.setText("i" + i + "j" + j );
+                // set label not clickable
                 lbl.setEnabled(false);
+                
+                //add MyLabel to panel
                 panel.add(lbl);
 
                
-                // initial stat  
+                // initial stat  2 black and 2 white token
                 if (i == 3 && j == 4 || i == 4 && j == 3) {
                     lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
                     lbl.setContent(2);
@@ -53,12 +60,14 @@ import javax.swing.border.BevelBorder;
                     lbl.setContent(1);
                     player2.addJetons(lbl);
                 }
+                //save label inside matrix
                 lbls[i][j] = lbl;
             }
        }
                 
     }
     
+    //add tokens used by the both of players
     public void concatArrays()
     {
         jetons.clear();
@@ -66,13 +75,16 @@ import javax.swing.border.BevelBorder;
         jetons.addAll(player2.getJetons());
     }
     
+    //verify if lbl is empty
     public boolean verifyPosition(MyLabel lbl)
     {
         concatArrays();
+        // 1=> used by player1 && 2=> used by player2
         if(lbl.getContent() == 1 || lbl.getContent() == 2)
             return false;
         return true;
     }
+    
     public Player getPlayer1()
     {
         return player1;
@@ -82,15 +94,13 @@ import javax.swing.border.BevelBorder;
     {
         return player2;
     }
-//    public void setLbels( MyLabel[][] lbls)
-//    {
-//        this.lbls = lbls;
-//        //lbls[1][1].setBackground(Color.red);
-//    }
+    
     public ArrayList<MyLabel> getJetons()
     {
         return this.jetons;
     }
+    
+    // define player by content 1=> player1 && 2=> player2
     public Player getPlayer(int content)
     {
         if(content == 1)
@@ -103,44 +113,35 @@ import javax.swing.border.BevelBorder;
         }
         return null;
     }
+    
+    // get matrix
     public MyLabel [][] getLabels()
     {
         return lbls;
     }
+    
+    //get MyLabel by postion in matix
     public MyLabel getLabel(int i , int j)
     {
         return lbls[i][j];
         
     }
-//    public void setLabel(int i, int j)
-//    {
-//        lbls[i][j]
-//    
+    
+    // display tokens
     public void displayJetons()
     {
+        //current tokens of player1
         System.out.println(" player1 ");
         for(MyLabel lbl: getPlayer1().jetons)
         {
-//            for(int i=0;i<8;i++ )
-//                for(int j=0;j<8;j++ )
-//                {
-                   // if(lbl.getLocation() == lbls[i][j].getLocation())
-                        System.out.print(" content "+lbl.getContent());
- //               }
-            
+          System.out.print(" content "+lbl.getContent()); 
         }
         
+        //current tokens of player2
         System.out.println(" player2 ");
-        
         for(MyLabel lbl: getPlayer2().jetons)
         {
-//            for(int i=0;i<8;i++ )
-//                for(int j=0;j<8;j++ )
-//                {
-                   // if(lbl.getLocation() == lbls[i][j].getLocation())
-                        System.out.print(" content "+lbl.getContent());
-  //              }
-            
+           System.out.print(" content "+lbl.getContent());
         }
     }
 }

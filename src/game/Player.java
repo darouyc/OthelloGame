@@ -15,6 +15,7 @@ import javax.swing.JPanel;
  *
  * @author Hp EliteBook
  */
+// this class define player by their used tokens
 public class Player {
     ArrayList<MyLabel> jetons;
   
@@ -23,11 +24,13 @@ public class Player {
         jetons= new ArrayList();
     }
   
- 
+    //add used token to player
     public void addJetons(MyLabel pos)
     {
         jetons.add(pos);
     }
+    
+    //get score of player
     public int getScore()
     {
         return jetons.size();
@@ -37,6 +40,8 @@ public class Player {
     {
         return this.jetons;
     }
+    
+    //remove jetons won by adv
     public void removeJeton(MyLabel lbl){
        
         Iterator itr = jetons.iterator(); 
@@ -44,8 +49,10 @@ public class Player {
         { 
             MyLabel l = (MyLabel)itr.next(); 
             
+            // getMyLabel postion inside matrix and remove it from arraylist
             if(lbl.getLine() == l.getLine() && lbl.getColumn() == lbl.getColumn())
             {
+                // verify score
                 System.out.println("score before"+jetons.size());
                 jetons.remove(l);
                 System.out.println("score after"+jetons.size());
@@ -55,11 +62,4 @@ public class Player {
   
        
     }
-//    public void displayJetons()
-//    {
-//        for(MyLabel lbl: jetons)
-//        {
-//            System.out.print(" i "+i+" j "+j+"");
-//        }
-//    }
 }
