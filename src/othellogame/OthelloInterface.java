@@ -8,23 +8,10 @@ package othellogame;
 import Authentication.Authentication;
 import game.Game;
 import game.MyLabel;
-import game.Player;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Point;
-import java.util.ArrayList;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
-import javax.swing.text.Position;
 
 /**
  *

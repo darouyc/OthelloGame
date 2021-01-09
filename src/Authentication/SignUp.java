@@ -18,6 +18,7 @@ import javax.swing.SwingUtilities;
  */
 public class SignUp extends javax.swing.JFrame {
     
+    // instantiate the connection
     Connection con = null;
     PreparedStatement pst = null;
 
@@ -27,6 +28,8 @@ public class SignUp extends javax.swing.JFrame {
      */
     public SignUp() {
         initComponents();
+        
+        // set Jframe Into center 
         setLocationRelativeTo(null);
         SwingUtilities.getRootPane(signUp).setDefaultButton(signUp);
     }
@@ -123,15 +126,23 @@ public class SignUp extends javax.swing.JFrame {
     private void signUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpActionPerformed
         // TODO add your handling code here:
         try{
+            // save username and passwors in bdd
             String query = "INSERT INTO `authentication`(`username`, `password`) VALUES (?,?)";
             con = DriverManager.getConnection("jdbc:mysql://localhost/othellogame", "root" , "");
             pst = con.prepareStatement(query);
             pst.setString(1, txtUsername.getText());
             pst.setString(2, txtPassword.getText());
+            
+            //verify if username and password is not empty
             if(txtUsername.getText().length() > 0 || txtPassword.getText().length() > 0){
                 pst.execute();
+                
+            //close signUp JFrame
                 dispose();
+                
+            // create new athentification
                 Authentication auth = new Authentication();
+            // display authentification JFrame
                 auth.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Please enter a username and password to SignUp!");
@@ -145,6 +156,8 @@ public class SignUp extends javax.swing.JFrame {
 
     private void goBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackActionPerformed
         // TODO add your handling code here:
+        
+         //close signUp JFrame and back to authentification JFrame
         dispose();
         Authentication auth = new Authentication();
         auth.setVisible(true);

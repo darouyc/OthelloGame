@@ -10,8 +10,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import othellogame.OthelloInterface;
@@ -22,12 +20,14 @@ import othellogame.OthelloInterface;
  */
 public class Authentication extends javax.swing.JFrame {
     
+    // instantiate the connection configurations
     Connection con = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
     
     public String getUser()
    {
+       //get username from JTextField txtUsername
        return txtUsername.getText();
    }
 
@@ -36,7 +36,11 @@ public class Authentication extends javax.swing.JFrame {
      */
     public Authentication() {
         initComponents();
+        
+        // display JFrame into center  
         setLocationRelativeTo(null);
+        
+        //default choice when user tape ENTER
         SwingUtilities.getRootPane(login).setDefaultButton(login);
     }
 
@@ -139,7 +143,7 @@ public class Authentication extends javax.swing.JFrame {
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         // TODO add your handling code here:
         try{
-            
+            // verifiy if username and password exist in data base
             String query = "SELECT * FROM `authentication` WHERE username = ? and password = ?";
             con = DriverManager.getConnection("jdbc:mysql://localhost/othellogame", "root" , "");
             pst = con.prepareStatement(query);
@@ -147,7 +151,11 @@ public class Authentication extends javax.swing.JFrame {
             pst.setString(2, txtPassword.getText());
             rs = pst.executeQuery();
             if(rs.next()){
+                
+                //if username and password are correct dispaly JFrame OthelloInterface
                 OthelloInterface othello = new OthelloInterface();
+                
+                // show username into interface
                 othello.setUser(txtUsername.getText());
                 othello.setVisible(true);
                 dispose();
@@ -162,15 +170,19 @@ public class Authentication extends javax.swing.JFrame {
 
     private void signUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpActionPerformed
         // TODO add your handling code here:
+        // redirect to signUp JFrame
         SignUp sign = new SignUp();
         dispose();
         sign.setVisible(true);
         
     }//GEN-LAST:event_signUpActionPerformed
-
+    
+    // this function allow user to play without sign in
     private void continueAsGuestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueAsGuestActionPerformed
         // TODO add your handling code here:
         OthelloInterface othello = new OthelloInterface();
+        
+        //display button for redirect to athentification 
         othello.setDisconnectButton("Connect");
         othello.setVisible(true);
         dispose();
