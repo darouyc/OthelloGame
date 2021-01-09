@@ -178,14 +178,13 @@ public class OthelloInterface extends javax.swing.JFrame {
                                 game.getLabel(i + 1, j).setEnabled(true);
 //                                win = false;
                             }
-                        
                             if (game.verifyPosition(game.getLabel(i - 1, j))) {
                                 game.getLabel(i - 1, j).setBackground(Color.red);
                                 game.getLabel(i - 1, j).setEnabled(true);
                             }
                         }
                             //Ligne
-                            if(verifyLine(i, game.getLabel(i, j + 1)))
+                            if(verifyLine(i, game.getLabel(i, j)))
                             {
                                 if (game.verifyPosition(game.getLabel(i, j + 1))) {
                                     game.getLabel(i, j + 1).setBackground(Color.red);
@@ -197,10 +196,10 @@ public class OthelloInterface extends javax.swing.JFrame {
                                 }
                             }
 
-                            //Diagonal
-                            if(verifyDiagonal(game.getLabel(i, j)))
+//                            Diagonal
+                            if(verifyDiagonal(j,game.getLabel(i, j)))
                             {
-                                if (game.verifyPosition(game.getLabel(i + 1, j + 1)) && game.getLabel(i - 1, j - 1).getContent() == switchContent(playerContent)) {
+                                if (game.verifyPosition(game.getLabel(i + 1, j + 1)) && game.getLabel(i - 1, j - 1).getContent() == switchContent(playerContent) ) {
                                     game.getLabel(i + 1, j + 1).setBackground(Color.red);
                                     game.getLabel(i + 1, j + 1).setEnabled(true);
                                 }
@@ -217,7 +216,7 @@ public class OthelloInterface extends javax.swing.JFrame {
                                     game.getLabel(i + 1, j - 1).setEnabled(true);
                                 }
                                 
-                        }
+                            }
                     }
                 }
             }
@@ -230,7 +229,8 @@ public class OthelloInterface extends javax.swing.JFrame {
     //line
     public boolean verifyLine(int line, MyLabel lbl) {
         for (int column = 0; column < 8; column++) {
-            if (game.getLabel(line, column).getContent() == switchContent(lbl.getContent()) && game.getLabel(line, column) != lbl) {
+            if (game.getLabel(line, column).getContent() == switchContent(lbl.getContent()) && game.getLabel(line, column)  != lbl) {
+                System.out.println("switch = "+lbl.getContent());
                 return true;
             }
         }
@@ -240,7 +240,7 @@ public class OthelloInterface extends javax.swing.JFrame {
     //column 
     public boolean verifyColumn(int column, MyLabel lbl) {
         for (int line = 0; line < 8; line++) {
-            if (game.getLabel(line, column).getContent() == switchContent(lbl.getContent()) && game.getLabel(line, column) != lbl) {
+            if (game.getLabel(line, column).getContent() == switchContent(lbl.getContent()) && game.getLabel(line, column)  != lbl) {
                 return true;
             }
         }
@@ -248,36 +248,59 @@ public class OthelloInterface extends javax.swing.JFrame {
     }
     //diagonale
 
-    public boolean verifyDiagonal(MyLabel lbl) {
+    public boolean verifyDiagonal(int j,MyLabel lbl) {
         //Calcul distance entre diag et position de label
         int dist = 0;
 
         //To localize the diagonal.column for each row
         int diagonal = 0;
-
+        
+        //To calculate distance based on normal diagonal
         for (int line = 0; line < 8; line++) {
             for (int column = 0; column < 8; column++) {
-                if (line == column) {
-                    diagonal = column;
+//                if (line == column) {
+//                    diagonal = column;
+//                }
+                if (game.getLabel(line, column) == lbl && lbl.getColumn() > line) {
+                    dist = lbl.getColumn() - line;
                 }
-                if (game.getLabel(line, column) == lbl && column > line) {
-                    dist = column - diagonal;
-                }
-                if (game.getLabel(line, column) == lbl && column < line) {
-                    dist = diagonal - column;
+                if (game.getLabel(line, column) == lbl && lbl.getColumn() < line) {
+                    dist = line - lbl.getColumn();
                 }
             }
         }
-
+        
+        //To verify the normal label's diagonal
         for (int line = 0; line < 8; line++) {
             for (int column = 0; column < 8; column++) {
                 if (column > line && (column + dist < 8)) {
-                    if (game.getLabel(line, column + dist).getContent() == switchContent(lbl.getContent())) {
+                    if (game.getLabel(line, column + dist).getContent() == switchContent(lbl.getContent()) ) {
+//                    if (game.getLabel(line, column + dist).getContent() == lbl.getContent() ) {
                         return true;
                     }
                 }
                 if (column <= line && (column - dist >= 0)) {
                     if (game.getLabel(line, column - dist).getContent() == switchContent(lbl.getContent()) ) {
+//                    if (game.getLabel(line, column - dist).getContent() == lbl.getContent() ) {
+                        return true;
+                    }
+                }
+            }
+        }
+        
+        
+        //To verify the opposite label's diagonal
+        for (int line = 0; line < 8; line++) {
+            for (int column = 7; column >=0; column--) {
+                if (column > line && (column - dist > 0)) {
+//                    if (game.getLabel(line, column + dist).getContent() == switchContent(lbl.getContent()) ) {
+                    if (game.getLabel(line, column - dist).getContent() == lbl.getContent() ) {
+                        return true;
+                    }
+                }
+                if (column <= line && (column + dist < 8)) {
+//                    if (game.getLabel(line, column - dist).getContent() == switchContent(lbl.getContent()) ) {
+                    if (game.getLabel(line, column + dist).getContent() == lbl.getContent() ) {
                         return true;
                     }
                 }
@@ -346,7 +369,7 @@ public class OthelloInterface extends javax.swing.JFrame {
                         drawJeton(game.getLabel(line, b), lbl.getContent());
                     }
                 }
-                if (column < j) {
+                if (column <= j) {
                     for (int b = column + 1; b < j; b++) {
                         game.getLabel(line, b).setContent(lbl.getContent());
                         game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(line, b));
@@ -369,7 +392,7 @@ public class OthelloInterface extends javax.swing.JFrame {
                         drawJeton(game.getLabel(b, column), lbl.getContent());
                     }
                 }
-                if (line < i) {
+                if (line <= i) {
                     for (int b = line + 1; b < i; b++) {
                         game.getLabel(b, column).setContent(lbl.getContent());
                         game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(b, column));
@@ -535,9 +558,9 @@ public class OthelloInterface extends javax.swing.JFrame {
     public int switchContent(int content) {
         if (content == 1) {
             return 2;
-        } else {
+        } else if(content == 2) {
             return 1;
-        }
+        } return 0;
     }
 
     public void drawJeton(MyLabel lbl, int content) {
