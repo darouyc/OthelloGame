@@ -66,6 +66,10 @@ import javax.swing.border.BevelBorder;
        }
                 
     }
+
+    public Game() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     //add tokens used by the both of players
     public void concatArrays()

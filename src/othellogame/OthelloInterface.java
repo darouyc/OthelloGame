@@ -200,30 +200,30 @@ public class OthelloInterface extends javax.swing.JFrame {
                             }
                         }
 
-                        //Diagonal
-                        if (verifyDiagonal(j, game.getLabel(i, j))) {
-                            // right && high 
-                            if (game.verifyPosition(game.getLabel(i + 1, j + 1)) && game.getLabel(i - 1, j - 1).getContent() == switchContent(playerContent)) {
-                                game.getLabel(i + 1, j + 1).setBackground(Color.red);
-                                game.getLabel(i + 1, j + 1).setEnabled(true);
-                            }
-                            //Left && buttom
-                            if (game.verifyPosition(game.getLabel(i - 1, j - 1)) && game.getLabel(i + 1, j + 1).getContent() == switchContent(playerContent)) {
-                                game.getLabel(i - 1, j - 1).setBackground(Color.red);
-                                game.getLabel(i - 1, j - 1).setEnabled(true);
-                            }
-                            //Left && high
-                            if (game.verifyPosition(game.getLabel(i - 1, j + 1)) && game.getLabel(i + 1, j - 1).getContent() == switchContent(playerContent)) {
-                                game.getLabel(i - 1, j + 1).setBackground(Color.red);
-                                game.getLabel(i - 1, j + 1).setEnabled(true);
-                            }
-                            //right && bottom
-                            if (game.verifyPosition(game.getLabel(i + 1, j - 1)) && game.getLabel(i - 1, j + 1).getContent() == switchContent(playerContent)) {
-                                game.getLabel(i + 1, j - 1).setBackground(Color.red);
-                                game.getLabel(i + 1, j - 1).setEnabled(true);
-                            }
-
-                        }
+//                        //Diagonal
+//                        if (verifyDiagonal(j, game.getLabel(i, j))) {
+//                            // right && high 
+//                            if (game.verifyPosition(game.getLabel(i + 1, j + 1)) && game.getLabel(i - 1, j - 1).getContent() == switchContent(playerContent)) {
+//                                game.getLabel(i + 1, j + 1).setBackground(Color.red);
+//                                game.getLabel(i + 1, j + 1).setEnabled(true);
+//                            }
+//                            //Left && buttom
+//                            if (game.verifyPosition(game.getLabel(i - 1, j - 1)) && game.getLabel(i + 1, j + 1).getContent() == switchContent(playerContent)) {
+//                                game.getLabel(i - 1, j - 1).setBackground(Color.red);
+//                                game.getLabel(i - 1, j - 1).setEnabled(true);
+//                            }
+//                            //Left && high
+//                            if (game.verifyPosition(game.getLabel(i - 1, j + 1)) && game.getLabel(i + 1, j - 1).getContent() == switchContent(playerContent)) {
+//                                game.getLabel(i - 1, j + 1).setBackground(Color.red);
+//                                game.getLabel(i - 1, j + 1).setEnabled(true);
+//                            }
+//                            //right && bottom
+//                            if (game.verifyPosition(game.getLabel(i + 1, j - 1)) && game.getLabel(i - 1, j + 1).getContent() == switchContent(playerContent)) {
+//                                game.getLabel(i + 1, j - 1).setBackground(Color.red);
+//                                game.getLabel(i + 1, j - 1).setEnabled(true);
+//                            }
+//
+//                        }
                     }
                 }
             }
@@ -404,170 +404,170 @@ public class OthelloInterface extends javax.swing.JFrame {
             }
         }
 
-        //Reverse diagonale to other player
-        //Calcul distance entre diag et position de label
-        int dist = 0;
-
-        //To localize the diagonal.column for each row
-        int diagonal = 0;
-
-        for (int lineDia = 0; lineDia < 8; lineDia++) {
-            for (int columnDia = 0; columnDia < 8; columnDia++) {
-                if (lineDia == columnDia) {
-                    diagonal = columnDia;
-                }
-                if (game.getLabel(lineDia, columnDia) == lbl && columnDia > lineDia) {
-                    dist = columnDia - diagonal;
-                }
-                if (game.getLabel(lineDia, columnDia) == lbl && columnDia < lineDia) {
-                    dist = diagonal - columnDia;
-                }
-                System.out.println("Distance is:" + dist);
-            }
-        }
-
-        //Get next position 
-        for (int lineDia = 0; lineDia < 8 && nextLine == -1; lineDia++) {
-            for (int columnDia = 0; columnDia < 8 && nextColumn == -1; columnDia++) {
-                if (lbl.getColumn() > lbl.getLine() && (columnDia + dist < 8)) {
-                    if (game.getLabel(lineDia, columnDia + dist).getContent() == lbl.getContent() && game.getLabel(lineDia, columnDia + dist) != lbl) {
-                        nextColumn = columnDia + dist;
-                        nextLine = lineDia;
-                        System.out.println(" 1 === nextLine " + nextLine + " nextColumn " + nextColumn);
-                        break;
-                    }
-                }
-                if (lbl.getColumn() <= lbl.getLine() && (columnDia - dist >= 0)) {
-                    if (game.getLabel(lineDia, columnDia - dist).getContent() == lbl.getContent() && game.getLabel(lineDia, columnDia - dist) != lbl) {
-
-                        nextColumn = columnDia - dist;
-                        nextLine = lineDia;
-                        System.out.println(" 2 ==== nextLine " + nextLine + " nextColumn " + nextColumn);
-                        break;
-
-                    }
-                }
-                
-            }
-        }
-//           for (int lineDia = 0; lineDia < 8 && nextLine == -1; lineDia++) {
-//            for (int columnDia = 7; columnDia >= 0 && nextColumn == -1; columnDia++) {
+//        //Reverse diagonale to other player
+//        //Calcul distance entre diag et position de label
+//        int dist = 0;
 //
-//                if (column > line && (columnDia - dist > 0)) {
-//                    if (game.getLabel(lineDia, columnDia - dist).getContent() == lbl.getContent() && game.getLabel(lineDia, columnDia - dist) != lbl) {
-//                        nextColumn = columnDia - dist;
-//                        nextLine = lineDia;
-//                        System.out.println(" 3 ===== nextLine " + nextLine + " nextColumn " + nextColumn);
-//                        break;
-//                    }
+//        //To localize the diagonal.column for each row
+//        int diagonal = 0;
+//
+//        for (int lineDia = 0; lineDia < 8; lineDia++) {
+//            for (int columnDia = 0; columnDia < 8; columnDia++) {
+//                if (lineDia == columnDia) {
+//                    diagonal = columnDia;
 //                }
-//
-//                if (column <= line && (columnDia + dist < 8)) {
-//                    if (game.getLabel(lineDia, columnDia + dist).getContent() == lbl.getContent() && game.getLabel(lineDia, columnDia + dist) != lbl) {
-//
-//                        nextColumn = columnDia + dist;
-//                        nextLine = lineDia;
-//                        System.out.println(" 4 === nextLine " + nextLine + " nextColumn " + nextColumn);
-//                        break;
-//                    }
+//                if (game.getLabel(lineDia, columnDia) == lbl && columnDia > lineDia) {
+//                    dist = columnDia - diagonal;
 //                }
-//
+//                if (game.getLabel(lineDia, columnDia) == lbl && columnDia < lineDia) {
+//                    dist = diagonal - columnDia;
+//                }
+//                System.out.println("Distance is:" + dist);
 //            }
 //        }
 //
-        if (nextColumn < lbl.getColumn() && nextLine < lbl.getLine()) {
-            System.out.println(" 1************88column " + lbl.getColumn() + " line " + lbl.getLine());
-            for (int i = nextLine + 1, j = nextColumn + 1; i < lbl.getLine() && j < lbl.getColumn(); i++, j++) {
-                {
-
-                    if (i < j && (j + dist < 8)) {
-                        game.getLabel(i, j + dist).setContent(lbl.getContent());
-                        System.out.println(" 1==== i " + i + " j+dist " + (j + dist));
-                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(i, j + dist));
-                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(i, j + dist));
-                        drawJeton(game.getLabel(i, j + dist), lbl.getContent());
-
-                    }
-                    if (i >= j && (j - dist >= 0)) {
-                        game.getLabel(i, j - dist).setContent(lbl.getContent());
-                        System.out.println(" 1 ==== i " + i + " j- dist " + (j - dist));
-                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(i, j - dist));
-                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(i, j - dist));
-                        drawJeton(game.getLabel(i, j - dist), lbl.getContent());
-
-                    }
-                }
-            }
-        }
-        if (nextColumn > lbl.getColumn() && nextLine < lbl.getLine()) {
-            System.out.println(" 2 **************8line " + lbl.getLine() + " column " + lbl.getColumn());
-            for (int i = nextLine + 1, j = lbl.getColumn() + 1; j < nextColumn && i < lbl.getLine(); i++, j++) {
-
-                {
-                    System.out.println("**********************///////////////////////////////// ");
-                    if (i < j && (j + dist < 8)) {
-                        game.getLabel(i, j + dist).setContent(lbl.getContent());
-                        System.out.println(" 2====i " + i + " (j+dist) " + (j + dist));
-                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(i, j + dist));
-                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(i, j + dist));
-                        drawJeton(game.getLabel(i, j + dist), lbl.getContent());
-
-                    }
-                    if (i >= j && (j - dist >= 0)) {
-                        game.getLabel(i, j - dist).setContent(lbl.getContent());
-                        System.out.println(" 2====i " + i + " j+dist " + (j + dist));
-                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(i, j - dist));
-                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(i, j - dist));
-                        drawJeton(game.getLabel(i, j - dist), lbl.getContent());
-
-                    }
-                }
-            }
-        }
-        if (nextColumn < lbl.getColumn() && nextLine >= lbl.getLine()) {
-            System.out.println(" 3***************line " + lbl.getLine() + " column " + lbl.getColumn());
-            for (int i = lbl.getLine() + 1, j = nextColumn + 1; i < nextLine && j < lbl.getColumn(); i++, j++) {
-                {
-                    System.out.println("**********************///////////////////////////////// ");
-                    if (i < j && (j + dist < 8)) {
-                        game.getLabel(i, j + dist).setContent(lbl.getContent());
-                        System.out.println("3============= i " + i + " j+dist " + (j + dist));
-                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(i, j + dist));
-                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(i, j + dist));
-                        drawJeton(game.getLabel(i, j + dist), lbl.getContent());
-                    }
-                    if (i >= j && (j - dist >= 0)) {
-                        game.getLabel(i, j - dist).setContent(lbl.getContent());
-                        System.out.println(" 3========i " + i + " j- dist " + (j - dist));
-                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(i, j - dist));
-                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(i, j - dist));
-                        drawJeton(game.getLabel(i, j - dist), lbl.getContent());
-                    }
-                }
-            }
-        }
-        if (nextColumn >= lbl.getColumn() && nextLine >= lbl.getLine()) {
-            System.out.println(" 4***************line " + lbl.getColumn() + " column " + lbl.getColumn());
-            for (int i = lbl.getLine() + 1, j = lbl.getColumn() + 1; i < nextLine && j < nextColumn; i++, j++) {
-                {
-                    System.out.println("**********************///////////////////////////////// ");
-                    if (i < j && (j + dist < 8)) {
-                        game.getLabel(i, j + dist).setContent(lbl.getContent());
-                        System.out.println(" 4==========i " + i + " j+dist " + (j + dist));
-                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(i, j + dist));
-                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(i, j + dist));
-                        drawJeton(game.getLabel(i, j + dist), lbl.getContent());
-                    }
-                    if (i >= j && (j - dist >= 0)) {
-                        game.getLabel(i, j - dist).setContent(lbl.getContent());
-                        System.out.println(" 4 ========i " + i + " j-dist " + (j - dist));
-                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(i, j - dist));
-                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(i, j - dist));
-                        drawJeton(game.getLabel(i, j - dist), lbl.getContent());
-                    }
-                }
-            }
-        }
+//        //Get next position 
+//        for (int lineDia = 0; lineDia < 8 && nextLine == -1; lineDia++) {
+//            for (int columnDia = 0; columnDia < 8 && nextColumn == -1; columnDia++) {
+//                if (lbl.getColumn() > lbl.getLine() && (columnDia + dist < 8)) {
+//                    if (game.getLabel(lineDia, columnDia + dist).getContent() == lbl.getContent() && game.getLabel(lineDia, columnDia + dist) != lbl) {
+//                        nextColumn = columnDia + dist;
+//                        nextLine = lineDia;
+//                        System.out.println(" 1 === nextLine " + nextLine + " nextColumn " + nextColumn);
+//                        break;
+//                    }
+//                }
+//                if (lbl.getColumn() <= lbl.getLine() && (columnDia - dist >= 0)) {
+//                    if (game.getLabel(lineDia, columnDia - dist).getContent() == lbl.getContent() && game.getLabel(lineDia, columnDia - dist) != lbl) {
+//
+//                        nextColumn = columnDia - dist;
+//                        nextLine = lineDia;
+//                        System.out.println(" 2 ==== nextLine " + nextLine + " nextColumn " + nextColumn);
+//                        break;
+//
+//                    }
+//                }
+//                
+//            }
+//        }
+////           for (int lineDia = 0; lineDia < 8 && nextLine == -1; lineDia++) {
+////            for (int columnDia = 7; columnDia >= 0 && nextColumn == -1; columnDia++) {
+////
+////                if (column > line && (columnDia - dist > 0)) {
+////                    if (game.getLabel(lineDia, columnDia - dist).getContent() == lbl.getContent() && game.getLabel(lineDia, columnDia - dist) != lbl) {
+////                        nextColumn = columnDia - dist;
+////                        nextLine = lineDia;
+////                        System.out.println(" 3 ===== nextLine " + nextLine + " nextColumn " + nextColumn);
+////                        break;
+////                    }
+////                }
+////
+////                if (column <= line && (columnDia + dist < 8)) {
+////                    if (game.getLabel(lineDia, columnDia + dist).getContent() == lbl.getContent() && game.getLabel(lineDia, columnDia + dist) != lbl) {
+////
+////                        nextColumn = columnDia + dist;
+////                        nextLine = lineDia;
+////                        System.out.println(" 4 === nextLine " + nextLine + " nextColumn " + nextColumn);
+////                        break;
+////                    }
+////                }
+////
+////            }
+////        }
+////
+//        if (nextColumn < lbl.getColumn() && nextLine < lbl.getLine()) {
+//            System.out.println(" 1************88column " + lbl.getColumn() + " line " + lbl.getLine());
+//            for (int i = nextLine + 1, j = nextColumn + 1; i < lbl.getLine() && j < lbl.getColumn(); i++, j++) {
+//                {
+//
+//                    if (i < j && (j + dist < 8)) {
+//                        game.getLabel(i, j + dist).setContent(lbl.getContent());
+//                        System.out.println(" 1==== i " + i + " j+dist " + (j + dist));
+//                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(i, j + dist));
+//                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(i, j + dist));
+//                        drawJeton(game.getLabel(i, j + dist), lbl.getContent());
+//
+//                    }
+//                    if (i >= j && (j - dist >= 0)) {
+//                        game.getLabel(i, j - dist).setContent(lbl.getContent());
+//                        System.out.println(" 1 ==== i " + i + " j- dist " + (j - dist));
+//                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(i, j - dist));
+//                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(i, j - dist));
+//                        drawJeton(game.getLabel(i, j - dist), lbl.getContent());
+//
+//                    }
+//                }
+//            }
+//        }
+//        if (nextColumn > lbl.getColumn() && nextLine < lbl.getLine()) {
+//            System.out.println(" 2 **************8line " + lbl.getLine() + " column " + lbl.getColumn());
+//            for (int i = nextLine + 1, j = lbl.getColumn() + 1; j < nextColumn && i < lbl.getLine(); i++, j++) {
+//
+//                {
+//                    System.out.println("**********************///////////////////////////////// ");
+//                    if (i < j && (j + dist < 8)) {
+//                        game.getLabel(i, j + dist).setContent(lbl.getContent());
+//                        System.out.println(" 2====i " + i + " (j+dist) " + (j + dist));
+//                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(i, j + dist));
+//                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(i, j + dist));
+//                        drawJeton(game.getLabel(i, j + dist), lbl.getContent());
+//
+//                    }
+//                    if (i >= j && (j - dist >= 0)) {
+//                        game.getLabel(i, j - dist).setContent(lbl.getContent());
+//                        System.out.println(" 2====i " + i + " j+dist " + (j + dist));
+//                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(i, j - dist));
+//                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(i, j - dist));
+//                        drawJeton(game.getLabel(i, j - dist), lbl.getContent());
+//
+//                    }
+//                }
+//            }
+//        }
+//        if (nextColumn < lbl.getColumn() && nextLine >= lbl.getLine()) {
+//            System.out.println(" 3***************line " + lbl.getLine() + " column " + lbl.getColumn());
+//            for (int i = lbl.getLine() + 1, j = nextColumn + 1; i < nextLine && j < lbl.getColumn(); i++, j++) {
+//                {
+//                    System.out.println("**********************///////////////////////////////// ");
+//                    if (i < j && (j + dist < 8)) {
+//                        game.getLabel(i, j + dist).setContent(lbl.getContent());
+//                        System.out.println("3============= i " + i + " j+dist " + (j + dist));
+//                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(i, j + dist));
+//                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(i, j + dist));
+//                        drawJeton(game.getLabel(i, j + dist), lbl.getContent());
+//                    }
+//                    if (i >= j && (j - dist >= 0)) {
+//                        game.getLabel(i, j - dist).setContent(lbl.getContent());
+//                        System.out.println(" 3========i " + i + " j- dist " + (j - dist));
+//                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(i, j - dist));
+//                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(i, j - dist));
+//                        drawJeton(game.getLabel(i, j - dist), lbl.getContent());
+//                    }
+//                }
+//            }
+//        }
+//        if (nextColumn >= lbl.getColumn() && nextLine >= lbl.getLine()) {
+//            System.out.println(" 4***************line " + lbl.getColumn() + " column " + lbl.getColumn());
+//            for (int i = lbl.getLine() + 1, j = lbl.getColumn() + 1; i < nextLine && j < nextColumn; i++, j++) {
+//                {
+//                    System.out.println("**********************///////////////////////////////// ");
+//                    if (i < j && (j + dist < 8)) {
+//                        game.getLabel(i, j + dist).setContent(lbl.getContent());
+//                        System.out.println(" 4==========i " + i + " j+dist " + (j + dist));
+//                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(i, j + dist));
+//                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(i, j + dist));
+//                        drawJeton(game.getLabel(i, j + dist), lbl.getContent());
+//                    }
+//                    if (i >= j && (j - dist >= 0)) {
+//                        game.getLabel(i, j - dist).setContent(lbl.getContent());
+//                        System.out.println(" 4 ========i " + i + " j-dist " + (j - dist));
+//                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(i, j - dist));
+//                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(i, j - dist));
+//                        drawJeton(game.getLabel(i, j - dist), lbl.getContent());
+//                    }
+//                }
+//            }
+//        }
 
     }
     
