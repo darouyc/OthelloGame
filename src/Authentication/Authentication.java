@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import othellogame.ChoosePlayer2;
 import othellogame.OthelloInterface;
 
 /**
@@ -205,11 +206,10 @@ public class Authentication extends javax.swing.JFrame {
             if(rs.next()){
                 
                 //if username and password are correct dispaly JFrame OthelloInterface
-               ChoosePlayer2 cp = new ChoosePlayer2();
+               ChoosePlayer2 cp = new ChoosePlayer2(txtUsername.getText());
                 
                 // show username into interface
-                othello.setUser(txtUsername.getText());
-                othello.setVisible(true);
+                cp.setVisible(true);
                 dispose();
             }else {
                 JOptionPane.showMessageDialog(this, "Your username or password is incorrect !");
@@ -232,12 +232,16 @@ public class Authentication extends javax.swing.JFrame {
     // this function allow user to play without sign in
     private void continueAsGuestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueAsGuestActionPerformed
         // TODO add your handling code here:
-        OthelloInterface othello = new OthelloInterface();
-        
+         //if username and password are correct dispaly JFrame OthelloInterface
+               ChoosePlayer2 cp = new ChoosePlayer2(txtUsername.getText());
+                
+                // show username into interface
+                cp.setVisible(true);
+                dispose();
         //display button for redirect to athentification 
-        othello.setDisconnectButton("Connect");
-        othello.setVisible(true);
-        dispose();
+//        othello.setDisconnectButton("Connect");
+//        othello.setVisible(true);
+//        dispose();
     }//GEN-LAST:event_continueAsGuestActionPerformed
 
     /**

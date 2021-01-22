@@ -14,7 +14,10 @@ public class ChoosePlayer2 extends javax.swing.JFrame {
     /**
      * Creates new form ChoosePlayer2
      */
-    public ChoosePlayer2() {
+    
+    String userName;
+    public ChoosePlayer2(String userName) {
+        this.userName=userName;
         initComponents();
     }
 
@@ -74,6 +77,7 @@ public class ChoosePlayer2 extends javax.swing.JFrame {
         // TODO add your handling code here:
         boolean humain = true;
         OthelloInterface p = new OthelloInterface(humain);
+        p.setUser(userName);
         p.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -116,7 +120,7 @@ public class ChoosePlayer2 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ChoosePlayer2().setVisible(true);
+                new ChoosePlayer2("machine").setVisible(true);
             }
         });
     }

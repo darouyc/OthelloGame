@@ -188,32 +188,47 @@ public class OthelloInterface extends javax.swing.JFrame {
                             //Column
                             
                             //high
-                            if (game.verifyPosition(game.getLabel(i + 1, j))) {
-                                game.getLabel(i + 1, j).setBackground(Color.red);
-                                game.getLabel(i + 1, j).setEnabled(true);
-                                possibility.add(game.getLabel(i + 1, j));
+                            if ( i+1<8 && i+1>=0) {
+                                if(game.verifyPosition(game.getLabel(i + 1, j)))
+                                {
+                                    game.getLabel(i + 1, j).setBackground(Color.red);
+                                    game.getLabel(i + 1, j).setEnabled(true);
+                                    possibility.add(game.getLabel(i + 1, j));
+                                }
 
                             }
                             //bottom
-                            if (game.verifyPosition(game.getLabel(i - 1, j))) {
-                                game.getLabel(i - 1, j).setBackground(Color.red);
-                                game.getLabel(i - 1, j).setEnabled(true);
-                                possibility.add(game.getLabel(i - 1, j));
+                            if ( i-1<8 && i-1>= 0) {
+                                if(game.verifyPosition(game.getLabel(i - 1, j)) )
+                                {
+                                    game.getLabel(i - 1, j).setBackground(Color.red);
+                                    game.getLabel(i - 1, j).setEnabled(true);
+                                    possibility.add(game.getLabel(i - 1, j));
+                                }
+                                
                             }
                         }
                         //Line
                         //Right
-                        if (verifyLine(i, game.getLabel(i, j))) {
-                            if (game.verifyPosition(game.getLabel(i, j + 1))) {
-                                game.getLabel(i, j + 1).setBackground(Color.red);
-                                game.getLabel(i, j + 1).setEnabled(true);
-                                possibility.add(game.getLabel(i, j + 1));
+                        if (verifyLine(i, game.getLabel(i, j)) ) {
+                            if ( j+1<8 && j+1>=0) {
+                                if(game.verifyPosition(game.getLabel(i, j + 1)))
+                                {
+                                    game.getLabel(i, j + 1).setBackground(Color.red);
+                                    game.getLabel(i, j + 1).setEnabled(true);
+                                    possibility.add(game.getLabel(i, j + 1));
+                                }
+                                
                             }
                             //Left
-                            if (game.verifyPosition(game.getLabel(i, j - 1))) {
-                                game.getLabel(i, j - 1).setBackground(Color.red);
-                                game.getLabel(i, j - 1).setEnabled(true);
-                                possibility.add(game.getLabel(i, j - 1));
+                            if (j-1<8 && j-1>=0) {
+                                if(game.verifyPosition(game.getLabel(i, j - 1)))
+                                {
+                                    game.getLabel(i, j - 1).setBackground(Color.red);
+                                    game.getLabel(i, j - 1).setEnabled(true);
+                                    possibility.add(game.getLabel(i, j - 1));
+                                }
+                                
                             }
                         }
 
@@ -245,7 +260,7 @@ public class OthelloInterface extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-
+            System.err.print(e);
         }
         return possibility;
     }
