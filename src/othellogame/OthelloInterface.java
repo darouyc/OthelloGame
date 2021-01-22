@@ -386,12 +386,16 @@ public class OthelloInterface extends javax.swing.JFrame {
                 if (lbl.getLine() > i) {
                     for (int b = i + 1; b < lbl.getLine(); b++) {
                         game.getLabel(b, lbl.getColumn()).setContent(lbl.getContent());
+//                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(b, lbl.getColumn()));
+//                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(b, lbl.getColumn()));
                         drawJeton(game.getLabel(b, lbl.getColumn()), lbl.getContent());
                     }
                 }
                 if (lbl.getLine() <= i) {
                     for (int b = lbl.getLine() + 1; b < i; b++) {
                         game.getLabel(b, lbl.getColumn()).setContent(lbl.getContent());
+//                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(b, lbl.getColumn()));
+//                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(b, lbl.getColumn()));
                         drawJeton(game.getLabel(b, lbl.getColumn()), lbl.getContent());
                     }
                 }
