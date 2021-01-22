@@ -59,7 +59,11 @@ public class Player {
                 break;
             }
         } 
-  
-       
+    
+    } 
+    public void updateJetons(ArrayList<MyLabel> newJetons)
+    {
+        this.jetons = new ArrayList<MyLabel>();
+        this.jetons = newJetons;
     }
 }

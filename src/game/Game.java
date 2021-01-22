@@ -148,4 +148,31 @@ import javax.swing.border.BevelBorder;
            System.out.print(" content "+lbl.getContent());
         }
     }
+    
+    //Update score for players
+    public void updateScore()
+    {
+        //create new arrayList 
+         ArrayList<MyLabel> jetons1= new ArrayList<MyLabel>();
+         ArrayList<MyLabel> jetons2= new ArrayList<MyLabel>();
+         
+        for(int line = 0;line<lbls.length;line++)
+            for(int column = 0;column<lbls.length; column++)
+            {
+                //get labels where content == 1 from matrix
+                if(lbls[line][column].getContent()== 1)
+                {
+                    jetons1.add(lbls[line][column]);
+                }
+                //get labels where content == 2 from matrix
+                if(lbls[line][column].getContent()== 2)
+                {
+                    jetons2.add(lbls[line][column]);
+                }
+            }
+        //Update jetons from current matrix for players
+        player1.updateJetons(jetons1);
+        player2.updateJetons(jetons2);
+        
+    }
 }

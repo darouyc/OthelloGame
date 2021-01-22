@@ -11,6 +11,7 @@ import game.MyLabel;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 /**
@@ -156,6 +157,7 @@ public class OthelloInterface extends javax.swing.JFrame {
                 trace(1);
             }
         }
+        game.updateScore();
         //Update score
         lblScoreBlack.setText(" " + game.getPlayer2().getScore());
         //Update score
@@ -361,16 +363,13 @@ public class OthelloInterface extends javax.swing.JFrame {
                 if (lbl.getColumn() > j) {
                     for (int b = j + 1; b < lbl.getColumn(); b++) {
                         game.getLabel(lbl.getLine(), b).setContent(lbl.getContent());
-                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(lbl.getLine(), b));
-                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(lbl.getLine(), b));
                         drawJeton(game.getLabel(lbl.getLine(), b), lbl.getContent());
+                        
                     }
                 }
                 if (lbl.getColumn() <= j) {
                     for (int b = lbl.getColumn() + 1; b < j; b++) {
                         game.getLabel(lbl.getLine(), b).setContent(lbl.getContent());
-                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(lbl.getLine(), b));
-                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(lbl.getLine(), b));
                         drawJeton(game.getLabel(lbl.getLine(), b), lbl.getContent());
                     }
                 }
@@ -387,16 +386,12 @@ public class OthelloInterface extends javax.swing.JFrame {
                 if (lbl.getLine() > i) {
                     for (int b = i + 1; b < lbl.getLine(); b++) {
                         game.getLabel(b, lbl.getColumn()).setContent(lbl.getContent());
-                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(b, lbl.getColumn()));
-                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(b, lbl.getColumn()));
                         drawJeton(game.getLabel(b, lbl.getColumn()), lbl.getContent());
                     }
                 }
                 if (lbl.getLine() <= i) {
                     for (int b = lbl.getLine() + 1; b < i; b++) {
                         game.getLabel(b, lbl.getColumn()).setContent(lbl.getContent());
-                        game.getPlayer(switchContent(lbl.getContent())).removeJeton(game.getLabel(b, lbl.getColumn()));
-                        game.getPlayer(lbl.getContent()).addJetons(game.getLabel(b, lbl.getColumn()));
                         drawJeton(game.getLabel(b, lbl.getColumn()), lbl.getContent());
                     }
                 }
