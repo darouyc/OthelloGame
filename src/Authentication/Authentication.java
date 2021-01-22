@@ -205,7 +205,7 @@ public class Authentication extends javax.swing.JFrame {
             if(rs.next()){
                 
                 //if username and password are correct dispaly JFrame OthelloInterface
-                OthelloInterface othello = new OthelloInterface();
+               ChoosePlayer2 cp = new ChoosePlayer2();
                 
                 // show username into interface
                 othello.setUser(txtUsername.getText());

@@ -6,12 +6,14 @@
 package othellogame;
 
 import Authentication.Authentication;
+import game.AI;
 import game.Game;
 import game.MyLabel;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.ImageIcon;
 
 /**
@@ -24,12 +26,13 @@ public class OthelloInterface extends javax.swing.JFrame {
      * Creates new form OthelloInterface
      */
     Game game;
+    boolean humain = false;
     
     // change round for players
     boolean tour = false;
     
-    public OthelloInterface() {
-         
+    public OthelloInterface(boolean humain) {
+         this.humain = humain;
         //display interface
         initComponents();
         setLocationRelativeTo(null);
@@ -74,7 +77,7 @@ public class OthelloInterface extends javax.swing.JFrame {
     }
     
     
-    public void play(Point pos) {
+    public void choosePlayer(Point pos) {
 
         
         changePlayer();
@@ -84,67 +87,45 @@ public class OthelloInterface extends javax.swing.JFrame {
 
         //verify label if is empty
         if (game.verifyPosition(label)) {
-
+            System.out.println("***********************game");
             // player 1
             if (tour) {
-                //add white icon
-                label.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
-                label.setContent(1);
-                //add label to matrix with content 1 == white 
-                changeStat(label);
-
-                System.out.println("-----------done----------");
-
-                //change state get won tokens and change it 
-                checkBetween(label);
-                game.displayJetons();
                 
-                //Disable All labels
-                for (int i = 0; i < 8; i++) {
-                    for (int j = 0; j < 8; j++) {
-                        if (game.getLabel(i, j).getContent() == 0) {
-                            game.getLabel(i, j).setEnabled(false);
-                        }
-                    }
-                }
-
-                //display possibilities to next player
-                trace(1);
-
-                //change player
-                tour = false;
-                label.setBackground(new Color(40, 100, 28));
+                    label.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
+                    play(label, 1);
+                    //change player
+                     tour = false;
+                     label.setBackground(new Color(40, 100, 28));
+                
             } 
             
             //player 2 
             else {
-                //add black icon
-                label.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
-                label.setContent(2);
-                //add label to matrix with content 2 == black
-                changeStat(label);
 
-                System.out.println("-----------done----------");
-                
-                //change state get won tokens and change it 
-                checkBetween(label);
-                game.displayJetons();
-
-                //Disable All labels
-                for (int i = 0; i < 8; i++) {
-                    for (int j = 0; j < 8; j++) {
-                        if (game.getLabel(i, j).getContent() == 0) {
-                            game.getLabel(i, j).setEnabled(false);
-                        }
-                    }
-                }
-
-                //display possibilities to next player
-                trace(2);
-
-                //change player
-                tour = true;
-                label.setBackground(new Color(40, 100, 28));
+                    label.setIcon(new ImageIcon(getClass().getResource("/othellogame/blackdice.png")));
+                    play(label, 2);
+                    //change player
+                    tour = true;
+                    label.setBackground(new Color(40, 100, 28));
+                    if(!humain)
+                     {
+                        
+                        
+//                        AI gs = new AI(this);
+//                        MyLabel lbl = gs.playAI();
+                        int randomNum = ThreadLocalRandom.current().nextInt(0, trace(2).size());
+                        MyLabel lbl =trace(2).get(randomNum);
+                        lbl.setIcon(new ImageIcon(getClass().getResource("/othellogame/whitedice.png")));
+                        play(lbl, 1);    
+                        //change player
+                        changePlayer();
+                        trace(1);
+                        tour = false;
+                        lbl.setBackground(new Color(40, 100, 28));
+                         
+                     }
+                     
+                    
             }
         } else {
             // used position
@@ -164,10 +145,40 @@ public class OthelloInterface extends javax.swing.JFrame {
         lblScoreWhite.setText(" " + game.getPlayer1().getScore());
 
     }
+    //if player2 is a human
+    public void play( MyLabel label, int content)
+    {
+        //add white icon
+               
+                label.setContent(content);
+                //add label to matrix with content 1 == white 
+                changeStat(label);
+
+                System.out.println("-----------done----------");
+
+                //change state get won tokens and change it 
+                checkBetween(label);
+                game.displayJetons();
+                
+                //Disable All labels
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
+                        if (game.getLabel(i, j).getContent() == 0) {
+                            game.getLabel(i, j).setEnabled(false);
+                        }
+                    }
+                }
+
+                //display possibilities to next player
+                trace(content);
+
+                
+    }
     
     // get possibilities to player
-    private void trace(int playerContent) {
+    public ArrayList<MyLabel> trace(int playerContent) {
         
+        ArrayList<MyLabel> possibility = new ArrayList<MyLabel>();
         try {
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
@@ -180,12 +191,14 @@ public class OthelloInterface extends javax.swing.JFrame {
                             if (game.verifyPosition(game.getLabel(i + 1, j))) {
                                 game.getLabel(i + 1, j).setBackground(Color.red);
                                 game.getLabel(i + 1, j).setEnabled(true);
+                                possibility.add(game.getLabel(i + 1, j));
 
                             }
                             //bottom
                             if (game.verifyPosition(game.getLabel(i - 1, j))) {
                                 game.getLabel(i - 1, j).setBackground(Color.red);
                                 game.getLabel(i - 1, j).setEnabled(true);
+                                possibility.add(game.getLabel(i - 1, j));
                             }
                         }
                         //Line
@@ -194,11 +207,13 @@ public class OthelloInterface extends javax.swing.JFrame {
                             if (game.verifyPosition(game.getLabel(i, j + 1))) {
                                 game.getLabel(i, j + 1).setBackground(Color.red);
                                 game.getLabel(i, j + 1).setEnabled(true);
+                                possibility.add(game.getLabel(i, j + 1));
                             }
                             //Left
                             if (game.verifyPosition(game.getLabel(i, j - 1))) {
                                 game.getLabel(i, j - 1).setBackground(Color.red);
                                 game.getLabel(i, j - 1).setEnabled(true);
+                                possibility.add(game.getLabel(i, j - 1));
                             }
                         }
 
@@ -232,7 +247,7 @@ public class OthelloInterface extends javax.swing.JFrame {
         } catch (Exception e) {
 
         }
-
+        return possibility;
     }
 
     // verify if there is 2 tokens with different color in same line
@@ -783,7 +798,7 @@ public class OthelloInterface extends javax.swing.JFrame {
         //get component by position
         MyLabel ana = (MyLabel) panel.getComponentAt(pos);
         if (ana.isEnabled() == true) {
-            play(pos);
+            choosePlayer(pos);
         }
 
         //show matrix in console
@@ -854,7 +869,7 @@ public class OthelloInterface extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OthelloInterface().setVisible(true);
+                new OthelloInterface(true).setVisible(true);
             }
         });
     }
