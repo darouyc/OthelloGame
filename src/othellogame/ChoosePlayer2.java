@@ -18,9 +18,10 @@ public class ChoosePlayer2 extends javax.swing.JFrame {
     String userName;
     public ChoosePlayer2(String userName) {
         this.setTitle("Othello");
-        this.setLocationRelativeTo(null);
+        
         this.userName=userName;
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
